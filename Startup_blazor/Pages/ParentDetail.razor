@@ -1,0 +1,49 @@
+﻿@page "/{name}"
+@page "/{name}/{id}"
+@inherits ParentDetailBase
+<h3>@name</h3>
+
+@if (category == null)
+{
+    <div class="spinner-grow">Loading..</div>
+}
+else
+{
+
+
+    @foreach (var subcategory in category)
+    {
+
+        <table>
+
+            <tr>
+                <th>
+
+                    <NavLink class="nav-link" href="@($"{subcategory.Category_Name}/{subcategory.Id}")" Match="NavLinkMatch.All" @onclick="(() => HandleClick(subcategory.Category_Name, subcategory.Id))">
+                        <span class="oi" aria-hidden="true"></span> @subcategory.Category_Name
+                    </NavLink>
+                   
+                </th>
+                <td>
+                </td>
+
+            </tr>
+
+        </table>
+
+
+    }
+
+}
+
+@code{
+
+    @inject NavigationManager NavigationManager;
+
+    private void HandleClick(string name, int id)
+    {
+        NavigationManager.NavigateTo($"{name}/{id}", true);
+    }
+
+
+}
