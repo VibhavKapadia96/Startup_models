@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Startup_API.Models;
 
 namespace Startup_API.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    partial class AppDbContextModelSnapshot : ModelSnapshot
+    [Migration("20201013215247_Inital9")]
+    partial class Inital9
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -42,49 +44,6 @@ namespace Startup_API.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Categories");
-                });
-
-            modelBuilder.Entity("Startup_models.LinkRepo", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<int?>("categoriesId")
-                        .HasColumnType("int");
-
-                    b.Property<string>("link")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<int?>("linkTypeId")
-                        .HasColumnType("int");
-
-                    b.Property<string>("link_description")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("link_iframe")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<int?>("sourcesId")
-                        .HasColumnType("int");
-
-                    b.Property<string>("status")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<int>("vote")
-                        .HasColumnType("int");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("categoriesId");
-
-                    b.HasIndex("linkTypeId");
-
-                    b.HasIndex("sourcesId");
-
-                    b.ToTable("LinkRepo");
                 });
 
             modelBuilder.Entity("Startup_models.LinkType", b =>
@@ -125,7 +84,47 @@ namespace Startup_API.Migrations
                     b.ToTable("Sources");
                 });
 
-            modelBuilder.Entity("Startup_models.LinkRepo", b =>
+            modelBuilder.Entity("Startup_models.linkRepo", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<int?>("categoriesId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("link")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int?>("linkTypeId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("link_iframe")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int?>("sourcesId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("status")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("vote")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("categoriesId");
+
+                    b.HasIndex("linkTypeId");
+
+                    b.HasIndex("sourcesId");
+
+                    b.ToTable("LinkRepo");
+                });
+
+            modelBuilder.Entity("Startup_models.linkRepo", b =>
                 {
                     b.HasOne("Startup_models.Categories", "categories")
                         .WithMany()

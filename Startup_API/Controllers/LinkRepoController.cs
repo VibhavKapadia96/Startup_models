@@ -9,22 +9,22 @@ namespace Startup_API.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class SourcesController : ControllerBase
+    public class LinkRepoController : ControllerBase
     {
 
-        private readonly ISources sources;
+        private readonly ILinkRepo linkRepo;
 
-        public SourcesController(ISources sources)
+        public LinkRepoController(ILinkRepo linkRepo)
         {
-            this.sources = sources;
+            this.linkRepo = linkRepo;
         }
 
         [HttpGet]
-        public async Task<ActionResult> GetSources()
+        public async Task<ActionResult> GetLinks()
         {
             try
             {
-                return Ok(await sources.GetSources());
+                return Ok(await linkRepo.GetLinks());
             }
             catch (Exception)
             {
@@ -34,13 +34,13 @@ namespace Startup_API.Controllers
         }
 
         [HttpGet("{id:int}")]
-        public async Task<ActionResult> GetSource(int id)
+        public async Task<ActionResult> GetLink(int id)
         {
 
             try
             {
 
-                var result = await sources.GetSource(id);
+                var result = await linkRepo.GetLink(id);
 
                 if (result == null) return NotFound();
 
@@ -56,11 +56,11 @@ namespace Startup_API.Controllers
         }
 
         [HttpGet("{name}")]
-        public async Task<ActionResult> GetSourcebyName(string name)
+        public async Task<ActionResult> GetLinkbyName(string name)
         {
             try
             {
-                var result = await sources.GetSourcebyName(name);
+                var result = await linkRepo.GetLinkbyName(name);
 
                 if (result != null)
                 {
@@ -78,16 +78,16 @@ namespace Startup_API.Controllers
         }
 
         [HttpPost]
-        public async Task<ActionResult> CreateSource(Sources source)
+        public async Task<ActionResult> CreateSource(LinkRepo linkRepodata)
         {
 
             try
             {
-                if (source == null)
+                if (linkRepodata == null)
                     return BadRequest();
 
 
-                var result = await sources.GetSourcebyName(source.Source_Name);
+                var result = await linkRepo.GetLinkbyName(linkRepodata.link);
                 if (result != null)
 
                 {
@@ -96,9 +96,9 @@ namespace Startup_API.Controllers
                 }
 
 
-                var createdSource = await sources.AddSource(source);
+                var createdSource = await linkRepo.AddLink(linkRepodata);
 
-                return CreatedAtAction(nameof(GetSources), new { id = createdSource.Id }, createdSource);
+                return CreatedAtAction(nameof(GetLink), new { id = createdSource.Id }, createdSource);
             }
             catch (Exception)
             {
@@ -108,19 +108,19 @@ namespace Startup_API.Controllers
         }
 
         [HttpPut("{id:int}")]
-        public async Task<ActionResult<Sources>> UpdateSource(int id, Sources source)
+        public async Task<ActionResult<LinkRepo>> UpdateSource(int id, LinkRepo linkRepodata)
         {
             try
             {
-                if (id != source.Id)
+                if (id != linkRepodata.Id)
                     return BadRequest("Source ID mismatch");
 
-                var sourceToUpdate = await sources.GetSource(id);
+                var sourceToUpdate = await linkRepo.GetLink(id);
 
                 if (sourceToUpdate == null)
                     return NotFound($"Source with Id = {id} not found");
 
-                return await sources.UpdateSource(source);
+                return await linkRepo.UpdateLink(linkRepodata);
             }
             catch (Exception)
             {
@@ -130,18 +130,18 @@ namespace Startup_API.Controllers
         }
 
         [HttpDelete("{id:int}")]
-        public async Task<ActionResult<Sources>> DeleteSource(int id)
+        public async Task<ActionResult<LinkRepo>> DeleteSource(int id)
         {
             try
             {
-                var sourceToDelete = await sources.GetSource(id);
+                var sourceToDelete = await linkRepo.GetLink(id);
 
                 if (sourceToDelete == null)
                 {
                     return NotFound($"Source with Id = {id} not found");
                 }
 
-                return await sources.DeleteSource(id);
+                return await linkRepo.DeleteLink(id);
             }
             catch (Exception)
             {

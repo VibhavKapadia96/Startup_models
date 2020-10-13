@@ -33,6 +33,7 @@ namespace Startup_API
             services.AddScoped<ICategories, CRUDCategories>();
             services.AddScoped<ISources, CRUDSources>();
             services.AddScoped<ILinkTypes, CRUDLinkTypes>();
+            services.AddScoped<ILinkRepo, CRUDLinkRepo>();
             services.AddControllers();
          
         }

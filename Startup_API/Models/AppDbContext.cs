@@ -14,7 +14,7 @@ namespace Startup_API.Models
         public DbSet<Categories> Categories { get; set; }
         public DbSet<Sources> Sources { get; set; }
         public DbSet<LinkType> LinkType { get; set; }
-        public DbSet<linkRepo> LinkRepo { get; set; }
+        public DbSet<LinkRepo> LinkRepo { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
