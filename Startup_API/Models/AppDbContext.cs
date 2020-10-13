@@ -20,16 +20,7 @@ namespace Startup_API.Models
         {
             base.OnModelCreating(modelBuilder);
 
-            //Seed Categories Table
-            modelBuilder.Entity<Categories>().HasData(
-                new Categories { Id = 1, Category_Parent = null, Category_Name="GRE" , Parent_Id=0}); 
-            
-            modelBuilder.Entity<Categories>().HasData(
-                new Categories { Id = 2, Category_Parent = null, Category_Name="GMATE", Parent_Id = 0 });
-
-
-            modelBuilder.Entity<Categories>().HasData(
-                new Categories { Id = 3, Category_Parent = "GRE", Category_Name = "Quant", Parent_Id = 1 });
+           
 
         }
     }
