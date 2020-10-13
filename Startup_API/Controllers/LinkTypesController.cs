@@ -3,28 +3,30 @@ using Microsoft.AspNetCore.Mvc;
 using Startup_API.Models;
 using Startup_models;
 using System;
+using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 
 namespace Startup_API.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class SourcesController : ControllerBase
+    public class LinkTypesController : ControllerBase
     {
 
-        private readonly ISources sources;
+        private readonly ILinkTypes linkTypes;
 
-        public SourcesController(ISources sources)
+        public LinkTypesController(ILinkTypes linkTypes)
         {
-            this.sources = sources;
+            this.linkTypes = linkTypes;
         }
 
         [HttpGet]
-        public async Task<ActionResult> GetSources()
+        public async Task<ActionResult> GetLinkTypes()
         {
             try
             {
-                return Ok(await sources.GetSources());
+                return Ok(await linkTypes.GetLinkTypes());
             }
             catch (Exception)
             {
@@ -34,13 +36,13 @@ namespace Startup_API.Controllers
         }
 
         [HttpGet("{id:int}")]
-        public async Task<ActionResult> GetCategory(int id)
+        public async Task<ActionResult> GetLinkType(int id)
         {
 
             try
             {
 
-                var result = await sources.GetSource(id);
+                var result = await linkTypes.GetLinkType(id);
 
                 if (result == null) return NotFound();
 
@@ -56,11 +58,11 @@ namespace Startup_API.Controllers
         }
 
         [HttpGet("{name}")]
-        public async Task<ActionResult> GetSourcebyName(string name)
+        public async Task<ActionResult> GetLinkTypebyName(string name)
         {
             try
             {
-                var result = await sources.GetSourcebyName(name);
+                var result = await linkTypes.GetLinkTypebyName(name);
 
                 if (result != null)
                 {
@@ -78,16 +80,16 @@ namespace Startup_API.Controllers
         }
 
         [HttpPost]
-        public async Task<ActionResult> CreateSource(Sources source)
+        public async Task<ActionResult> CreatelinkType(LinkType linkType)
         {
 
             try
             {
-                if (source == null)
+                if (linkType == null)
                     return BadRequest();
 
 
-                var result = await sources.GetSourcebyName(source.Source_Name);
+                var result = await linkTypes.GetLinkTypebyName(linkType.Linktype_Name);
                 if (result != null)
 
                 {
@@ -96,9 +98,9 @@ namespace Startup_API.Controllers
                 }
 
 
-                var createdSource = await sources.AddSource(source);
+                var createdlinkType = await linkTypes.AddLinkType(linkType);
 
-                return CreatedAtAction(nameof(GetSources), new { id = createdSource.Id }, createdSource);
+                return CreatedAtAction(nameof(GetLinkTypes), new { id = createdlinkType.Id }, createdlinkType);
             }
             catch (Exception)
             {
@@ -108,19 +110,19 @@ namespace Startup_API.Controllers
         }
 
         [HttpPut("{id:int}")]
-        public async Task<ActionResult<Sources>> UpdateSource(int id, Sources source)
+        public async Task<ActionResult<LinkType>> UpdateSource(int id, LinkType linkType)
         {
             try
             {
-                if (id != source.Id)
+                if (id != linkType.Id)
                     return BadRequest("Source ID mismatch");
 
-                var sourceToUpdate = await sources.GetSource(id);
+                var linkTypeToUpdate = await linkTypes.GetLinkType(id);
 
-                if (sourceToUpdate == null)
-                    return NotFound($"Source with Id = {id} not found");
+                if (linkTypeToUpdate == null)
+                    return NotFound($"LinkType with Id = {id} not found");
 
-                return await sources.UpdateSource(source);
+                return await linkTypes.UpdateLinkType(linkType);
             }
             catch (Exception)
             {
@@ -130,18 +132,18 @@ namespace Startup_API.Controllers
         }
 
         [HttpDelete("{id:int}")]
-        public async Task<ActionResult<Sources>> DeleteSource(int id)
+        public async Task<ActionResult<LinkType>> DeleteSource(int id)
         {
             try
             {
-                var sourceToDelete = await sources.GetSource(id);
+                var linkTypeToDelete = await linkTypes.GetLinkType(id);
 
-                if (sourceToDelete == null)
+                if (linkTypeToDelete == null)
                 {
-                    return NotFound($"Source with Id = {id} not found");
+                    return NotFound($"Link Type with Id = {id} not found");
                 }
 
-                return await sources.DeleteSource(id);
+                return await linkTypes.DeleteLinkType(id);
             }
             catch (Exception)
             {

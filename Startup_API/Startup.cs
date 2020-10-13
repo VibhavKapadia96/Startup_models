@@ -29,12 +29,12 @@ namespace Startup_API
         {
 
             services.AddDbContext<AppDbContext>(options =>
-       options.UseSqlServer(Configuration.GetConnectionString("DBConnection")));
+                                                            options.UseSqlServer(Configuration.GetConnectionString("DBConnection")));
             services.AddScoped<ICategories, CRUDCategories>();
             services.AddScoped<ISources, CRUDSources>();
+            services.AddScoped<ILinkTypes, CRUDLinkTypes>();
             services.AddControllers();
          
-
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -50,6 +50,8 @@ namespace Startup_API
             app.UseRouting();
 
             app.UseAuthorization();
+
+           
 
             app.UseEndpoints(endpoints =>
             {
