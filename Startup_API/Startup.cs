@@ -31,6 +31,7 @@ namespace Startup_API
             services.AddDbContext<AppDbContext>(options =>
        options.UseSqlServer(Configuration.GetConnectionString("DBConnection")));
             services.AddScoped<ICategories, CRUDCategories>();
+            services.AddScoped<ISources, CRUDSources>();
             services.AddControllers();
          
 

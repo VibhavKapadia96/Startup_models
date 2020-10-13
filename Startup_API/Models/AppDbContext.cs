@@ -20,8 +20,6 @@ namespace Startup_API.Models
         {
             base.OnModelCreating(modelBuilder);
 
-           
-
         }
     }
 }

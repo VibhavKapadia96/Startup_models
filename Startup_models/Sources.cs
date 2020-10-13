@@ -10,7 +10,7 @@ namespace Startup_models
         public int Id { get; set; }
 
         [Required]
-        public string Sourece_Name { get; set; }
+        public string Source_Name { get; set; }
         public string status { get; set; } = "live";
     }
 }
