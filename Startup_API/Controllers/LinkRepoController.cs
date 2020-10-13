@@ -78,7 +78,7 @@ namespace Startup_API.Controllers
         }
 
         [HttpPost]
-        public async Task<ActionResult> CreateSource(LinkRepo linkRepodata)
+        public async Task<ActionResult> AddLink(LinkRepo linkRepodata)
         {
 
             try
@@ -103,12 +103,12 @@ namespace Startup_API.Controllers
             catch (Exception)
             {
                 return StatusCode(StatusCodes.Status500InternalServerError,
-                    "Error creating new employee record");
+                    "Error creating new Link record");
             }
         }
 
         [HttpPut("{id:int}")]
-        public async Task<ActionResult<LinkRepo>> UpdateSource(int id, LinkRepo linkRepodata)
+        public async Task<ActionResult<LinkRepo>> UpdateLink(int id, LinkRepo linkRepodata)
         {
             try
             {
@@ -130,7 +130,7 @@ namespace Startup_API.Controllers
         }
 
         [HttpDelete("{id:int}")]
-        public async Task<ActionResult<LinkRepo>> DeleteSource(int id)
+        public async Task<ActionResult<LinkRepo>> DeleteLink(int id)
         {
             try
             {

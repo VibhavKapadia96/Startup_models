@@ -7,30 +7,34 @@ using System.Threading.Tasks;
 
 namespace Startup_API.Models
 {
-    public class CRUDLinkTypes : ILinkTypes
+    public class CRUDLinkRepo : ILinkRepo
     {
 
         public readonly AppDbContext appDbContext;
 
-        public CRUDLinkTypes(AppDbContext appDbContext)
+        public CRUDLinkRepo(AppDbContext appDbContext)
         {
             this.appDbContext = appDbContext;
         }
 
-        public async Task<LinkType> AddLinkType(LinkType linkType)
+        public async Task<LinkRepo> AddLink(LinkRepo link)
         {
-            var result = await appDbContext.LinkType.AddAsync(linkType);
+
+            link.categories = appDbContext.Categories.First(x => x.Id == link.categories.Id);
+            link.linkType = appDbContext.LinkType.First(x => x.Id == link.linkType.Id);
+            link.sources = appDbContext.Sources.First(x => x.Id == link.sources.Id);
+            var result = await appDbContext.LinkRepo.AddAsync(link);
             await appDbContext.SaveChangesAsync();
             return result.Entity;
         }
 
-        public async Task<LinkType> DeleteLinkType(int LinkTypeId)
+        public async Task<LinkRepo> DeleteLink(int LinkId)
         {
-            var result = await appDbContext.LinkType
-                .FirstOrDefaultAsync(e => e.Id == LinkTypeId);
+            var result = await appDbContext.LinkRepo
+                .FirstOrDefaultAsync(e => e.Id == LinkId);
             if (result != null)
             {
-                appDbContext.LinkType.Remove(result);
+                appDbContext.LinkRepo.Remove(result);
                 await appDbContext.SaveChangesAsync();
                 return result;
             }
@@ -38,32 +42,32 @@ namespace Startup_API.Models
             return null;
         }
 
-        public async Task<LinkType> GetLinkType(int LinkTypeId)
+        public async Task<LinkRepo> GetLink(int LinkId)
         {
-            return await appDbContext.LinkType
-                .FirstOrDefaultAsync(e => e.Id == LinkTypeId);
+            return await appDbContext.LinkRepo
+                .FirstOrDefaultAsync(e => e.Id == LinkId);
         }
 
-        public async Task<LinkType> GetLinkTypebyName(string LinkTypeName)
+        public async Task<LinkRepo> GetLinkbyName(string Link)
         {
-            return await appDbContext.LinkType
-                .FirstOrDefaultAsync(e => e.Linktype_Name == LinkTypeName);
+            return await appDbContext.LinkRepo
+                .FirstOrDefaultAsync(e => e.link == Link);
         }
 
-        public async Task<IEnumerable<LinkType>> GetLinkTypes()
+        public async Task<IEnumerable<LinkRepo>> GetLinks()
         {
-            return await appDbContext.LinkType.ToListAsync();
+            return await appDbContext.LinkRepo.ToListAsync();
         }
 
-        public async Task<LinkType> UpdateLinkType(LinkType linkType)
+        public async Task<LinkRepo> UpdateLink(LinkRepo link)
         {
-            var result = await appDbContext.LinkType.FirstOrDefaultAsync(e => e.Id == linkType.Id);
+            var result = await appDbContext.LinkRepo.FirstOrDefaultAsync(e => e.Id == link.Id);
             if (result != null)
             {
-                result.Linktype_Name = linkType.Linktype_Name;
+                result.link = link.link;
                 await appDbContext.SaveChangesAsync();
                 return result;
-            }   
+            }
             return null;
         }
     }

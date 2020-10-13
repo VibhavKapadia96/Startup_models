@@ -93,7 +93,7 @@ namespace Startup_API.Controllers
                 if (result != null)
 
                 {
-                    ModelState.AddModelError("Source_Name", "Source Name Already Created");
+                    ModelState.AddModelError("Linktype_Name", "Linktype Name Already Created");
                     return BadRequest(ModelState);
                 }
 
