@@ -3,7 +3,7 @@
 @inherits ParentDetailBase
 <h3>@name</h3>
 
-@if (category == null)
+@if (category == null || linkRepositories == null)
 {
     <div class="spinner-grow">Loading..</div>
 }
@@ -22,7 +22,31 @@ else
                     <NavLink class="nav-link" href="@($"{subcategory.Category_Name}/{subcategory.Id}")" Match="NavLinkMatch.All" @onclick="(() => HandleClick(subcategory.Category_Name, subcategory.Id))">
                         <span class="oi" aria-hidden="true"></span> @subcategory.Category_Name
                     </NavLink>
-                   
+
+                </th>
+                <td>
+                </td>
+
+            </tr>
+
+        </table>
+
+
+    }
+
+
+    @foreach (var link in linkRepositories)
+    {
+
+        <table>
+
+            <tr>
+                <th>
+
+                    <NavLink class="nav-link" href="@($"{link.link}")" Match="NavLinkMatch.All" @onclick="(() => HandleClick(link.link,link.Id))">
+                        <span class="oi" aria-hidden="true"></span> @link.link
+                    </NavLink>
+
                 </th>
                 <td>
                 </td>

@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.ComponentModel.DataAnnotations;
-using System.Text;
+﻿using System.ComponentModel.DataAnnotations;
 
 namespace Startup_models
 {
@@ -15,5 +11,7 @@ namespace Startup_models
         public string Category_Parent { get; set; }
         public int Parent_Id { get; set; } = 0;
         public string status { get; set; } = "live";
+
+        public string topParentMapper { get; set; }
     }
 }

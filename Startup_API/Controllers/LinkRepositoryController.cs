@@ -3,29 +3,32 @@ using Microsoft.AspNetCore.Mvc;
 using Startup_API.Models;
 using Startup_models;
 using System;
+using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 
 namespace Startup_API.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class SourcesController : ControllerBase
+    public class LinkRepositoryController : ControllerBase
     {
 
-        private readonly ISources sources;
-        private readonly ILinkRepo linkRepo;
-        public SourcesController(ISources sources, ILinkRepo linkRepo)
+        
+        private readonly ILinkRepository linkRepository;
+
+        public LinkRepositoryController(ILinkRepository linkRepository)
         {
-            this.sources = sources;
-            this.linkRepo = linkRepo;
+            this.linkRepository = linkRepository;
+          
         }
 
         [HttpGet]
-        public async Task<ActionResult> GetSources()
+        public async Task<ActionResult> GetLinks()
         {
             try
             {
-                return Ok(await sources.GetSources());
+                return Ok(await linkRepository.GetLinks());
             }
             catch (Exception)
             {
@@ -35,13 +38,13 @@ namespace Startup_API.Controllers
         }
 
         [HttpGet("{id:int}")]
-        public async Task<ActionResult> GetSource(int id)
+        public async Task<ActionResult> GetLink(int id)
         {
 
             try
             {
 
-                var result = await sources.GetSource(id);
+                var result = await linkRepository.GetLink(id);
 
                 if (result == null) return NotFound();
 
@@ -57,11 +60,11 @@ namespace Startup_API.Controllers
         }
 
         [HttpGet("{name}")]
-        public async Task<ActionResult> GetSourcebyName(string name)
+        public async Task<ActionResult> GetLinkbyName(string name)
         {
             try
             {
-                var result = await sources.GetSourcebyName(name);
+                var result = await linkRepository.GetLinkbyName(name);
 
                 if (result != null)
                 {
@@ -79,49 +82,48 @@ namespace Startup_API.Controllers
         }
 
         [HttpPost]
-        public async Task<ActionResult> CreateSource(Sources source)
+        public async Task<ActionResult> AddLink(LinkRepository linkRepodata)
         {
 
             try
             {
-                if (source == null)
+                if (linkRepodata == null)
                     return BadRequest();
 
 
-                var result = await sources.GetSourcebyName(source.Source_Name);
+                var result = await linkRepository.GetLinkbyName(linkRepodata.link);
                 if (result != null)
-
                 {
                     ModelState.AddModelError("Source_Name", "Source Name Already Created");
                     return BadRequest(ModelState);
                 }
 
+                var createdSource = await linkRepository.AddLink(linkRepodata);
 
-                var createdSource = await sources.AddSource(source);
-
-                return CreatedAtAction(nameof(GetSources), new { id = createdSource.Id }, createdSource);
+                return CreatedAtAction(nameof(GetLink), new { id = createdSource.Id }, createdSource);
             }
-            catch (Exception)
+            catch (Exception ex)
             {
                 return StatusCode(StatusCodes.Status500InternalServerError,
-                    "Error creating new employee record");
+                    "Error creating new Link record " + ex.Message);
             }
         }
 
         [HttpPut("{id:int}")]
-        public async Task<ActionResult<Sources>> UpdateSource(int id, Sources source)
+        public async Task<ActionResult<LinkRepository>> UpdateLink(int id, LinkRepository linkRepodata)
         {
             try
             {
-                if (id != source.Id)
+                if (id != linkRepodata.Id)
                     return BadRequest("Source ID mismatch");
 
-                var sourceToUpdate = await sources.GetSource(id);
+                var sourceToUpdate = await linkRepository.GetLink(id);
 
                 if (sourceToUpdate == null)
                     return NotFound($"Source with Id = {id} not found");
 
-                return await sources.UpdateSource(source);
+
+                return await linkRepository.UpdateLink(linkRepodata);
             }
             catch (Exception)
             {
@@ -131,25 +133,18 @@ namespace Startup_API.Controllers
         }
 
         [HttpDelete("{id:int}")]
-        public async Task<ActionResult<Sources>> DeleteSource(int id)
+        public async Task<ActionResult<LinkRepository>> DeleteLink(int id)
         {
             try
             {
-                var sourceToDelete = await sources.GetSource(id);
+                var sourceToDelete = await linkRepository.GetLink(id);
 
                 if (sourceToDelete == null)
                 {
                     return NotFound($"Source with Id = {id} not found");
                 }
 
-                var isDatainLinkRepo = await linkRepo.GetLinkbySourceId(id);
-
-                if (isDatainLinkRepo != null)
-                {
-                    return BadRequest($"Source linked to data Links");
-                }
-
-                return await sources.DeleteSource(id);
+                return await linkRepository.DeleteLink(id);
             }
             catch (Exception)
             {

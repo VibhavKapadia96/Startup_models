@@ -8,13 +8,16 @@ namespace Startup_API.Models
 {
     public interface ILinkRepo
     {
-        Task<IEnumerable<LinkRepo>> GetLinks();
-        Task<LinkRepo> GetLink(int SourceId);
-        Task<LinkRepo> GetLinkbyName(string SourceName);
-        Task<LinkRepo> AddLink(LinkRepo linkRepo);
-        Task<LinkRepo> UpdateLink(LinkRepo linkRepo);
-        Task<LinkRepo> DeleteLink(int SourceId);
-       
+        Task<IEnumerable<linkRepository>> GetLinks();
+        Task<linkRepository> GetLink(int linkId);
+        Task<linkRepository> GetLinkbyName(string SourceName);
+        Task<linkRepository> AddLink(linkRepository linkRepo);
+        Task<linkRepository> UpdateLink(linkRepository linkRepo);
+        Task<linkRepository> DeleteLink(int linkId);
+        Task<linkRepository> GetLinkbyCategoryId(int categoryId);
+        Task<linkRepository> GetLinkbyLinkTypeId(int LinkTypeId);
+        Task<linkRepository> GetLinkbySourceId(int SourceId);
+
 
     }
 }

@@ -3,12 +3,11 @@ using Startup_blazor.Services;
 using Startup_models;
 using System.Collections.Generic;
 using System.Linq;
-using System.Threading;
 using System.Threading.Tasks;
 
 namespace Startup_blazor.Shared
 {
-    public class ParentsNav :ComponentBase
+    public class ParentsNav : ComponentBase
     {
 
         [Inject]
@@ -20,7 +19,7 @@ namespace Startup_blazor.Shared
             Categories = (await CategoryService.Getcategories()).ToList();
         }
 
-     
+
 
     }
 }

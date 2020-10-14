@@ -13,10 +13,16 @@ namespace Startup_API.Controllers
     {
 
         private readonly ILinkRepo linkRepo;
+        private readonly ILinkTypes linkType;
+        private readonly ICategories categories;
+        private readonly ISources sources;
 
-        public LinkRepoController(ILinkRepo linkRepo)
+        public LinkRepoController(ILinkRepo linkRepo,ILinkTypes linkType, ISources sources, ICategories categories)
         {
             this.linkRepo = linkRepo;
+            this.linkType = linkType;
+            this.sources = sources;
+            this.categories = categories;
         }
 
         [HttpGet]
@@ -78,7 +84,7 @@ namespace Startup_API.Controllers
         }
 
         [HttpPost]
-        public async Task<ActionResult> AddLink(LinkRepo linkRepodata)
+        public async Task<ActionResult> AddLink(linkRepository linkRepodata)
         {
 
             try
@@ -89,12 +95,31 @@ namespace Startup_API.Controllers
 
                 var result = await linkRepo.GetLinkbyName(linkRepodata.link);
                 if (result != null)
-
                 {
                     ModelState.AddModelError("Source_Name", "Source Name Already Created");
                     return BadRequest(ModelState);
                 }
 
+                var isPresentLinkType = await linkType.GetLinkType(linkRepodata.linkTypeId);
+
+                if (isPresentLinkType == null) {
+                    ModelState.AddModelError("Link Type", "Link Type not found");
+                    return BadRequest(ModelState);
+                }
+
+                var isPresentCategory = await categories.GetCategory(linkRepodata.categoryId);
+
+                if (isPresentCategory == null) {
+                    ModelState.AddModelError("Category", "Category not found");
+                    return BadRequest(ModelState);
+                }
+
+                var isPresentSource = await sources.GetSource(linkRepodata.sourcesId);
+
+                if (isPresentSource == null) {
+                    ModelState.AddModelError("Source", "Source not found");
+                    return BadRequest(ModelState);
+                }
 
                 var createdSource = await linkRepo.AddLink(linkRepodata);
 
@@ -108,7 +133,7 @@ namespace Startup_API.Controllers
         }
 
         [HttpPut("{id:int}")]
-        public async Task<ActionResult<LinkRepo>> UpdateLink(int id, LinkRepo linkRepodata)
+        public async Task<ActionResult<linkRepository>> UpdateLink(int id, linkRepository linkRepodata)
         {
             try
             {
@@ -120,6 +145,31 @@ namespace Startup_API.Controllers
                 if (sourceToUpdate == null)
                     return NotFound($"Source with Id = {id} not found");
 
+                var isPresentLinkType = await linkType.GetLinkType(linkRepodata.linkTypeId);
+
+                if (isPresentLinkType == null)
+                {
+                    ModelState.AddModelError("Link Type", "Link Type not found");
+                    return BadRequest(ModelState);
+                }
+
+                var isPresentCategory = await categories.GetCategory(linkRepodata.categoryId);
+
+                if (isPresentCategory == null)
+                {
+                    ModelState.AddModelError("Category", "Category not found");
+                    return BadRequest(ModelState);
+                }
+
+                var isPresentSource = await sources.GetSource(linkRepodata.sourcesId);
+
+                if (isPresentSource == null)
+                {
+                    ModelState.AddModelError("Source", "Source not found");
+                    return BadRequest(ModelState);
+                }
+
+
                 return await linkRepo.UpdateLink(linkRepodata);
             }
             catch (Exception)
@@ -130,7 +180,7 @@ namespace Startup_API.Controllers
         }
 
         [HttpDelete("{id:int}")]
-        public async Task<ActionResult<LinkRepo>> DeleteLink(int id)
+        public async Task<ActionResult<linkRepository>> DeleteLink(int id)
         {
             try
             {

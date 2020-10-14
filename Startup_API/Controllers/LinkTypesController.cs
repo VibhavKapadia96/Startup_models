@@ -3,8 +3,6 @@ using Microsoft.AspNetCore.Mvc;
 using Startup_API.Models;
 using Startup_models;
 using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
 
 namespace Startup_API.Controllers
@@ -15,11 +13,14 @@ namespace Startup_API.Controllers
     {
 
         private readonly ILinkTypes linkTypes;
-
-        public LinkTypesController(ILinkTypes linkTypes)
+        private readonly ILinkRepo linkRepo;
+        public LinkTypesController(ILinkTypes linkTypes, ILinkRepo linkRepo)
         {
             this.linkTypes = linkTypes;
+            this.linkRepo = linkRepo;
         }
+
+
 
         [HttpGet]
         public async Task<ActionResult> GetLinkTypes()
@@ -141,6 +142,13 @@ namespace Startup_API.Controllers
                 if (linkTypeToDelete == null)
                 {
                     return NotFound($"Link Type with Id = {id} not found");
+                }
+
+                var isDatainLinkRepo = await linkRepo.GetLinkbyLinkTypeId(id);
+
+                if (isDatainLinkRepo != null)
+                {
+                    return BadRequest($"Link Type linked to data Links");
                 }
 
                 return await linkTypes.DeleteLinkType(id);

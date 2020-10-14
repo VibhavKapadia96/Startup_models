@@ -1,10 +1,12 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using System;
+using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
+using System.Text;
 
 namespace Startup_models
 {
-    public class linkRepository
+    public class LinkRepository
     {
-
         public int Id { get; set; }
 
         [Required]
@@ -13,12 +15,13 @@ namespace Startup_models
         public string link_description { get; set; }
         public string status { get; set; } = "live";
         public int vote { get; set; } = 0;
-        [Required]
-        public int categoryId { get; set; }
-        [Required]
+       
+        public int categoriesId { get; set; }
+       
+        public Categories categories { get; set; }
         public int linkTypeId { get; set; }
-        [Required]
+        public LinkType linkType { get; set; }
         public int sourcesId { get; set; }
-
+        public Sources sources { get; set; }
     }
 }

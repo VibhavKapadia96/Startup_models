@@ -1,7 +1,5 @@
 ﻿using Startup_models;
-using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
 
 namespace Startup_API.Models
@@ -14,7 +12,7 @@ namespace Startup_API.Models
         Task<LinkType> AddLinkType(LinkType linkType);
         Task<LinkType> UpdateLinkType(LinkType linkType);
         Task<LinkType> DeleteLinkType(int linkTypeId);
-       
+
 
     }
 }

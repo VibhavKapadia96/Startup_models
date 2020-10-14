@@ -1,8 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Startup_models;
-using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
 
 namespace Startup_API.Models
@@ -63,7 +61,7 @@ namespace Startup_API.Models
                 result.Linktype_Name = linkType.Linktype_Name;
                 await appDbContext.SaveChangesAsync();
                 return result;
-            }   
+            }
             return null;
         }
     }

@@ -1,8 +1,6 @@
 ﻿using Microsoft.AspNetCore.Components;
 using Startup_models;
-using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Net.Http;
 using System.Threading.Tasks;
 
@@ -24,7 +22,7 @@ namespace Startup_blazor.Services
 
         public async Task<IEnumerable<Categories>> GetcategoryDetails(string name)
         {
-              return await httpClient.GetJsonAsync<Categories[]>($"api/categories/{name}");
+            return await httpClient.GetJsonAsync<Categories[]>($"api/categories/{name}");
         }
     }
 }

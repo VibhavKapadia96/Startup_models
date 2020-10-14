@@ -2,12 +2,12 @@
 
 namespace Startup_API.Migrations
 {
-    public partial class Initial2 : Migration
+    public partial class Initial10 : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.AddColumn<string>(
-                name: "status",
+                name: "topParentMapper",
                 table: "Categories",
                 nullable: true);
         }
@@ -15,7 +15,7 @@ namespace Startup_API.Migrations
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropColumn(
-                name: "status",
+                name: "topParentMapper",
                 table: "Categories");
         }
     }

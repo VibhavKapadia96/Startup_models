@@ -17,18 +17,16 @@ namespace Startup_API.Models
             this.appDbContext = appDbContext;
         }
 
-        public async Task<LinkRepo> AddLink(LinkRepo link)
+        public async Task<linkRepository> AddLink(linkRepository link)
         {
 
-            link.categories = appDbContext.Categories.First(x => x.Id == link.categories.Id);
-            link.linkType = appDbContext.LinkType.First(x => x.Id == link.linkType.Id);
-            link.sources = appDbContext.Sources.First(x => x.Id == link.sources.Id);
+           
             var result = await appDbContext.LinkRepo.AddAsync(link);
             await appDbContext.SaveChangesAsync();
             return result.Entity;
         }
 
-        public async Task<LinkRepo> DeleteLink(int LinkId)
+        public async Task<linkRepository> DeleteLink(int LinkId)
         {
             var result = await appDbContext.LinkRepo
                 .FirstOrDefaultAsync(e => e.Id == LinkId);
@@ -42,24 +40,42 @@ namespace Startup_API.Models
             return null;
         }
 
-        public async Task<LinkRepo> GetLink(int LinkId)
+        public async Task<linkRepository> GetLink(int LinkId)
         {
             return await appDbContext.LinkRepo
                 .FirstOrDefaultAsync(e => e.Id == LinkId);
         }
 
-        public async Task<LinkRepo> GetLinkbyName(string Link)
+        public async Task<linkRepository> GetLinkbyCategoryId(int categoryId)
+        {
+            return await appDbContext.LinkRepo
+                .FirstOrDefaultAsync(e => e.categoryId == categoryId);
+        }
+
+        public async Task<linkRepository> GetLinkbyLinkTypeId(int LinkTypeId)
+        {
+            return await appDbContext.LinkRepo
+                .FirstOrDefaultAsync(e => e.linkTypeId == LinkTypeId);
+        }
+
+        public async Task<linkRepository> GetLinkbyName(string Link)
         {
             return await appDbContext.LinkRepo
                 .FirstOrDefaultAsync(e => e.link == Link);
         }
 
-        public async Task<IEnumerable<LinkRepo>> GetLinks()
+        public async Task<linkRepository> GetLinkbySourceId(int SourceId)
+        {
+            return await appDbContext.LinkRepo
+                .FirstOrDefaultAsync(e => e.sourcesId == SourceId);
+        }
+
+        public async Task<IEnumerable<linkRepository>> GetLinks()
         {
             return await appDbContext.LinkRepo.ToListAsync();
         }
 
-        public async Task<LinkRepo> UpdateLink(LinkRepo link)
+        public async Task<linkRepository> UpdateLink(linkRepository link)
         {
             var result = await appDbContext.LinkRepo.FirstOrDefaultAsync(e => e.Id == link.Id);
             if (result != null)

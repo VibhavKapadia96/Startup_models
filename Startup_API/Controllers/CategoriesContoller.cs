@@ -3,8 +3,6 @@ using Microsoft.AspNetCore.Mvc;
 using Startup_API.Models;
 using Startup_models;
 using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
 
 namespace Startup_API.Controllers
@@ -15,10 +13,12 @@ namespace Startup_API.Controllers
     public class CategoriesController : ControllerBase
     {
         private readonly ICategories categories;
+        private readonly ILinkRepo linkRepo;
 
-        public CategoriesController(ICategories categories)
+        public CategoriesController(ICategories categories, ILinkRepo linkRepo)
         {
             this.categories = categories;
+            this.linkRepo = linkRepo;
         }
 
         [HttpGet]
@@ -138,7 +138,7 @@ namespace Startup_API.Controllers
         }
 
         [HttpDelete("{id:int}")]
-        public async Task<ActionResult<Categories>> DeleteEmployee(int id)
+        public async Task<ActionResult<Categories>> DeleteCategory(int id)
         {
             try
             {
@@ -147,6 +147,19 @@ namespace Startup_API.Controllers
                 if (categoryToDelete == null)
                 {
                     return NotFound($"Employee with Id = {id} not found");
+                }
+
+                var isDatainLinkRepo = await linkRepo.GetLinkbyCategoryId(id);
+
+                if (isDatainLinkRepo != null) {
+                    return BadRequest($"Category linked to data Links");
+                }
+
+                var isCategoryRelated = await categories.GetCategoryByParentId(id);
+
+                if (categoryToDelete != null)
+                {
+                    return NotFound($"Category related to sub category");
                 }
 
                 return await categories.DeleteCategory(id);

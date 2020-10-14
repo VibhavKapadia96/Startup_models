@@ -1,6 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Startup_models;
-using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -20,8 +19,29 @@ namespace Startup_API.Models
 
         public async Task<Categories> AddCategory(Categories category)
         {
+            
             var result = await appDbContext.Categories.AddAsync(category);
             await appDbContext.SaveChangesAsync();
+
+
+            if (category.Parent_Id == 0)
+            {
+                category.topParentMapper = result.Entity.Id.ToString();
+                result = await appDbContext.Categories.AddAsync(category);
+                await appDbContext.SaveChangesAsync();
+            }
+            else {
+
+                var result2 = await appDbContext.Categories
+                            .FirstOrDefaultAsync(e => e.Id == category.Parent_Id);
+
+                category.topParentMapper =  result.Entity.Id.ToString() + "," + result2.topParentMapper ;
+                result = await appDbContext.Categories.AddAsync(category);
+                await appDbContext.SaveChangesAsync();
+
+            }
+
+
             return result.Entity;
         }
 
@@ -47,7 +67,7 @@ namespace Startup_API.Models
             query = query.Where(e => e.Category_Parent == null);
 
             return await query.ToListAsync();
-    }
+        }
 
         public async Task<Categories> GetCategory(int categoryId)
         {
@@ -58,7 +78,13 @@ namespace Startup_API.Models
         public async Task<Categories> GetCategorybyName(string categoryName, string categoryParent)
         {
             return await appDbContext.Categories
-                .FirstOrDefaultAsync(e => e.Category_Name == categoryName && e.Category_Parent==categoryParent);
+                .FirstOrDefaultAsync(e => e.Category_Name == categoryName && e.Category_Parent == categoryParent);
+        }
+
+        public async Task<Categories> GetCategoryByParentId(int categoryId)
+        {
+            return await appDbContext.Categories
+                .FirstOrDefaultAsync(e => e.Parent_Id == categoryId);
         }
 
         public async Task<IEnumerable<Categories>> GetSubCategorybyName(string categoryName)
