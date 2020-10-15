@@ -1,6 +1,7 @@
-﻿@page "/{name}"
-@page "/{name}/{id}"
+﻿@page "/{name}/{id}"
 @inherits ParentDetailBase
+
+
 <h3>@name</h3>
 
 @if (category == null || linkRepositories == null)
@@ -9,7 +10,7 @@
 }
 else
 {
-
+    
 
     @foreach (var subcategory in category)
     {
@@ -19,12 +20,28 @@ else
             <tr>
                 <th>
 
-                    <NavLink class="nav-link" href="@($"{subcategory.Category_Name}/{subcategory.Id}")" Match="NavLinkMatch.All" @onclick="(() => HandleClick(subcategory.Category_Name, subcategory.Id))">
+                    <NavLink class="nav-link" href="@($"{subcategory.Category_Name}/{subcategory.Id}")" Match="NavLinkMatch.All" @onclick="(() => HandleClick(subcategory.Category_Name, subcategory.Id.ToString()))">
                         <span class="oi" aria-hidden="true"></span> @subcategory.Category_Name
                     </NavLink>
 
                 </th>
                 <td>
+
+                    @foreach (var link in linkRepositories)
+                    {
+                        @if (link.categoriesId == subcategory.Id)
+                        {
+
+
+                            <NavLink class="nav-link" href="@($"{link.link}")" Match="NavLinkMatch.All" @onclick="(() => HandleClick(link.link,link.Id.ToString()))">
+                                <span class="oi" aria-hidden="true"></span> @link.link
+                            </NavLink>
+
+
+                        }
+
+                    }
+
                 </td>
 
             </tr>
@@ -35,28 +52,7 @@ else
     }
 
 
-    @foreach (var link in linkRepositories)
-    {
 
-        <table>
-
-            <tr>
-                <th>
-
-                    <NavLink class="nav-link" href="@($"{link.link}")" Match="NavLinkMatch.All" @onclick="(() => HandleClick(link.link,link.Id))">
-                        <span class="oi" aria-hidden="true"></span> @link.link
-                    </NavLink>
-
-                </th>
-                <td>
-                </td>
-
-            </tr>
-
-        </table>
-
-
-    }
 
 }
 
@@ -64,7 +60,7 @@ else
 
     @inject NavigationManager NavigationManager;
 
-    private void HandleClick(string name, int id)
+    private void HandleClick(string name, string id)
     {
         NavigationManager.NavigateTo($"{name}/{id}", true);
     }

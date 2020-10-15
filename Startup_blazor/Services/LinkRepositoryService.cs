@@ -23,7 +23,7 @@ namespace Startup_blazor.Services
 
         public async Task<IEnumerable<LinkRepository>> GetLinksbyCategoryId(int id)
         {
-            return await httpClient.GetJsonAsync<LinkRepository[]>($"api/categories/{id}");
+            return await httpClient.GetJsonAsync<LinkRepository[]>($"api/linkrepository/{id}");
         }
     }
 }

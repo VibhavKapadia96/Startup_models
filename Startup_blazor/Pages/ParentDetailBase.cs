@@ -27,7 +27,12 @@ namespace Startup_blazor.Pages
         protected override async Task OnInitializedAsync()
         {
             category = (await CategoryService.GetcategoryDetails(name)).ToList();
-            linkRepositories = (await linkRepositoryService.GetLinks()).ToList();
+
+            //linkRepositories = (await linkRepositoryService.GetLinks()).ToList();
+            //linkRepositories = linkRepositories.Concat(await linkRepositoryService.GetLinks()).ToList();
+
         }
+
+
     }
 }

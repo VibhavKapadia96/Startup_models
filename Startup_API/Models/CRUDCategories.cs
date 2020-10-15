@@ -1,4 +1,5 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.CodeAnalysis.CSharp;
+using Microsoft.EntityFrameworkCore;
 using Startup_models;
 using System.Collections.Generic;
 using System.Linq;
@@ -19,24 +20,21 @@ namespace Startup_API.Models
 
         public async Task<Categories> AddCategory(Categories category)
         {
-            
+
             var result = await appDbContext.Categories.AddAsync(category);
             await appDbContext.SaveChangesAsync();
 
-
             if (category.Parent_Id == 0)
             {
-                category.topParentMapper = result.Entity.Id.ToString();
-                result = await appDbContext.Categories.AddAsync(category);
+                result.Entity.topParentMapper = result.Entity.Id.ToString();
                 await appDbContext.SaveChangesAsync();
             }
-            else {
-
+            else
+            {
                 var result2 = await appDbContext.Categories
-                            .FirstOrDefaultAsync(e => e.Id == category.Parent_Id);
+                            .FirstOrDefaultAsync(e => e.Id == result.Entity.Parent_Id);
 
-                category.topParentMapper =  result.Entity.Id.ToString() + "," + result2.topParentMapper ;
-                result = await appDbContext.Categories.AddAsync(category);
+                result.Entity.topParentMapper = result.Entity.Id.ToString() + "," + result2.topParentMapper;
                 await appDbContext.SaveChangesAsync();
 
             }
@@ -123,7 +121,8 @@ namespace Startup_API.Models
             {
                 result.Category_Name = category.Category_Name;
                 result.Category_Parent = category.Category_Parent;
-
+                result.Parent_Id = category.Parent_Id;
+                result.topParentMapper = result.topParentMapper.Replace((char)result.Parent_Id,(char)category.Parent_Id);
                 await appDbContext.SaveChangesAsync();
 
                 return result;
