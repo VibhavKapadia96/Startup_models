@@ -62,7 +62,7 @@ namespace Startup_API.Models
         {
             IQueryable<Categories> query = appDbContext.Categories;
 
-            query = query.Where(e => e.Category_Parent == null);
+            query = query.Where(e => e.Parent_Id != -1);
 
             return await query.ToListAsync();
         }

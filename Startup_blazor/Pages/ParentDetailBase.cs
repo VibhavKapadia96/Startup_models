@@ -28,7 +28,7 @@ namespace Startup_blazor.Pages
         {
             category = (await CategoryService.GetcategoryDetails(name)).ToList();
 
-            //linkRepositories = (await linkRepositoryService.GetLinks()).ToList();
+            linkRepositories = (await linkRepositoryService.GetLinks()).ToList();
             //linkRepositories = linkRepositories.Concat(await linkRepositoryService.GetLinks()).ToList();
 
         }
