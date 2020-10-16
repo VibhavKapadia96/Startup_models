@@ -12,7 +12,7 @@
 
 
 }
-@if (categories_list == null)
+@if (Categories == null)
 {
     <div class="spinner-grow">Loading..</div>
 }
@@ -20,11 +20,41 @@ else
 {
 
 
-
-
 <div class="@NavMenuCssClass" @onclick="ToggleNavMenu">
 
-   <NavMenuData></NavMenuData>
+    <NavMenuData></NavMenuData>
+
+    @*@foreach (var parent in Categories)
+    {
+
+        @parent.Category_Name
+
+
+
+        while (Categories.Where(e => e.Parent_Id == parent.Id).OrderBy(e => e.Id) != null)
+
+        {
+
+            var children = Categories.Where(e => e.Parent_Id == parent.Id).OrderBy(e => e.Id);
+
+
+            foreach (var category in children) { 
+            
+                @category.Category_Name
+
+            }
+
+
+
+
+
+        }
+
+
+
+
+    }*@
+
 
 
 

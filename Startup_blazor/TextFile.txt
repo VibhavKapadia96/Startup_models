@@ -1,0 +1,53 @@
+﻿with  category_path (id, title,parent_id, path, lvl) AS
+(
+  SELECT id, Category_Name,Parent_Id, CAST(Category_Name AS VARCHAR(MAX)) as path, 0 lvl
+    FROM Categories
+    WHERE Parent_Id = 0 
+  UNION ALL
+  SELECT c.id, c.Category_Name,c.Parent_Id, CAST(CONCAT(cp.path, ' > ', c.Category_Name) AS VARCHAR(MAX)), cp.lvl + 1
+    FROM category_path AS cp JOIN Categories AS c
+      ON cp.id = c.parent_id 
+)
+SELECT * FROM category_path
+ORDER BY lvl ;
+
+
+
+
+WITH temp (ID, ParentID, ChildrenChain)
+AS
+(
+    SELECT ID, Parent_Id, CAST('' AS VARCHAR(100))
+    FROM Categories
+    WHERE NOT EXISTS (SELECT * FROM Categories cc WHERE cc.Parent_Id = Categories.ID)
+
+    UNION ALL
+
+    SELECT Categories.ID, Categories.Parent_Id, CAST((temp.ChildrenChain + ',' + CAST(temp.ID AS VARCHAR(100))) AS VARCHAR(100)) 
+    FROM Categories
+    INNER JOIN temp ON Categories.ID = temp.ParentID
+)
+
+SELECT DISTINCT ID,
+    REPLACE(
+        STUFF(
+           (SELECT
+                '>' + t2.ChildrenChain
+                FROM temp t2
+                WHERE temp.ID=t2.ID
+                ORDER BY t2.ChildrenChain
+                FOR XML PATH(''), TYPE
+           ).value('.','varchar(max)')
+           ,1,2, ''
+        ), 
+    ',,', ',') AS ChildValues
+FROM temp
+WHERE LEN(ChildrenChain) > 0
+
+
+
+
+
+
+
+

@@ -1,69 +1,88 @@
 ﻿@inherits ParentsNav
-@if (categories_list != null)
+@if (Categories != null)
 {
 
-    @foreach (var parent in categories_list.ToList())
+    @foreach (var parent in Categories)
     {
 
         if (parent.Parent_Id != 0) { continue; }
         <ul class="nav flex-column">
             <li class="nav-item px-3">
                 <NavLink class="nav-link" href="@($"{parent.Category_Name}/{parent.Id}")" Match="NavLinkMatch.All" @onclick="(() => HandleClick(parent.Category_Name,parent.Id.ToString()))">
-                    <span class="oi" aria-hidden="true"></span> @parent.Category_Name  @categories_list.Count()
+                    <span class="oi" aria-hidden="true"></span> @parent.Category_Name 
                 </NavLink>
 
 
-                @foreach (var sub_cat_1 in categories_list.ToList())
+                @{
+                    var children_lvl_1 = Categories.Where(e => e.Parent_Id == parent.Id).OrderBy(e => e.Id);
+                    //foreach (var category in children) { }
+                }
+
+                @foreach (var sub_cat_1 in children_lvl_1)
                 {
 
-                    if (sub_cat_1.Parent_Id == parent.Id)
-                    {
+                   
                         <ul>
                             <li class="nav-item px-3">
                                 <NavLink class="nav-link" href="@($"{sub_cat_1.Category_Name}/{sub_cat_1.Id}")" Match="NavLinkMatch.All" @onclick="(() => HandleClick(sub_cat_1.Category_Name,sub_cat_1.Id.ToString()))">
                                     <span class="oi" aria-hidden="true"></span> @sub_cat_1.Category_Name
                                 </NavLink>
 
+                                @{
+                                    var children_lvl_2 = Categories.Where(e => e.Parent_Id == sub_cat_1.Id).OrderBy(e => e.Id);
+                                    //foreach (var category in children) { }
+                                }
 
-                                @foreach (var sub_cat_2 in categories_list.ToList())
+                                @foreach (var sub_cat_2 in children_lvl_2)
                                 {
 
-                                    if (sub_cat_2.Parent_Id == sub_cat_1.Id)
-                                    {
+                                   
                                         <ul>
                                             <li class="nav-item px-3">
                                                 <NavLink class="nav-link" href="@($"{sub_cat_2.Category_Name}/{sub_cat_2.Id}")" Match="NavLinkMatch.All" @onclick="(() => HandleClick(sub_cat_2.Category_Name,sub_cat_2.Id.ToString()))">
                                                     <span class="oi" aria-hidden="true"></span> @sub_cat_2.Category_Name
                                                 </NavLink>
 
-                                                @foreach (var sub_cat_3 in categories_list.ToList())
+                                                @{
+                                                    var children_lvl_3 = Categories.Where(e => e.Parent_Id == sub_cat_2.Id).OrderBy(e => e.Id);
+                                                    //foreach (var category in children) { }
+                                                }
+
+                                                @foreach (var sub_cat_3 in children_lvl_3)
                                                 {
 
-                                                    if (sub_cat_3.Parent_Id == sub_cat_2.Id)
-                                                    {
+                                                   
                                                         <ul>
                                                             <li class="nav-item px-3">
                                                                 <NavLink class="nav-link" href="@($"{sub_cat_3.Category_Name}/{sub_cat_3.Id}")" Match="NavLinkMatch.All" @onclick="(() => HandleClick(sub_cat_3.Category_Name,sub_cat_3.Id.ToString()))">
                                                                     <span class="oi" aria-hidden="true"></span> @sub_cat_3.Category_Name
                                                                 </NavLink>
 
+                                                                @{
+                                                                    var children_lvl_4 = Categories.Where(e => e.Parent_Id == sub_cat_3.Id).OrderBy(e => e.Id);
+                                                                    //foreach (var category in children) { }
+                                                                }
 
-                                                                @foreach (var sub_cat_4 in categories_list.ToList())
+                                                                @foreach (var sub_cat_4 in children_lvl_4)
                                                                 {
 
-                                                                    if (sub_cat_4.Parent_Id == sub_cat_3.Id)
-                                                                    {
+                                                                   
                                                                         <ul>
                                                                             <li class="nav-item px-3">
                                                                                 <NavLink class="nav-link" href="@($"{sub_cat_4.Category_Name}/{sub_cat_4.Id}")" Match="NavLinkMatch.All" @onclick="(() => HandleClick(sub_cat_4.Category_Name,sub_cat_4.Id.ToString()))">
                                                                                     <span class="oi" aria-hidden="true"></span> @sub_cat_4.Category_Name
                                                                                 </NavLink>
 
-                                                                                @foreach (var sub_cat_5 in categories_list.ToList())
+
+                                                                                @{
+                                                                                    var children_lvl_5 = Categories.Where(e => e.Parent_Id == sub_cat_4.Id).OrderBy(e => e.Id);
+                                                                                    //foreach (var category in children) { }
+                                                                                }
+
+                                                                                @foreach (var sub_cat_5 in children_lvl_5)
                                                                                 {
 
-                                                                                    if (sub_cat_5.Parent_Id == sub_cat_4.Id)
-                                                                                    {
+                                                                                   
                                                                                         <ul>
                                                                                             <li class="nav-item px-3">
                                                                                                 <NavLink class="nav-link" href="@($"{sub_cat_5.Category_Name}/{sub_cat_5.Id}")" Match="NavLinkMatch.All" @onclick="(() => HandleClick(sub_cat_5.Category_Name,sub_cat_5.Id.ToString()))">
@@ -73,9 +92,7 @@
                                                                                             </li>
                                                                                         </ul>
 
-                                                                                        categories_list.Remove(sub_cat_5);
-
-                                                                                    }
+                                                                                     
 
                                                                                 }
 
@@ -87,17 +104,13 @@
                                                                             </li>
                                                                         </ul>
 
-                                                                        categories_list.Remove(sub_cat_4);
-
-                                                                    }
+                                                                      
 
                                                                 }
 
                                                             </li>
                                                         </ul>
 
-                                                        categories_list.Remove(sub_cat_3);
-                                                    }
 
 
 
@@ -107,8 +120,7 @@
                                             </li>
                                         </ul>
 
-                                        categories_list.Remove(sub_cat_2);
-                                    }
+                                    
 
 
 
@@ -117,15 +129,14 @@
 
                             </li>
                         </ul>
-                        categories_list.Remove(sub_cat_1);
-                    }
+                      
+                    
 
                 }
             </li>
 
         </ul>
-        categories_list.Remove(parent);
-
+      
 
     }
 }

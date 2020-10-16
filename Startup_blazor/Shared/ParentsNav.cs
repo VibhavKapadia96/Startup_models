@@ -1,8 +1,12 @@
 ﻿using Microsoft.AspNetCore.Components;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.ViewFeatures;
 using Startup_blazor.Services;
 using Startup_models;
+using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Text;
 using System.Threading.Tasks;
 
 namespace Startup_blazor.Shared
@@ -12,16 +16,17 @@ namespace Startup_blazor.Shared
 
         [Inject]
         public ICategoryService CategoryService { get; set; }
-        //public IEnumerable<Categories> Categories { get; set; }
-        public List<Categories> categories_list { get; set; }
+        public IEnumerable<Categories> Categories { get; set; }
 
         protected override async Task OnInitializedAsync()
         {
-            // Categories = (await CategoryService.Getcategories()).ToList();
-            categories_list = (await CategoryService.Getcategories()).ToList();
+             Categories = (await CategoryService.Getcategories()).ToList();
         }
 
 
 
     }
+
+
+
 }
