@@ -36,15 +36,7 @@ else
 
     private string NavMenuCssClass => collapseNavMenu ? "collapse" : null;
 
-    @inject NavigationManager NavigationManager;
-
-    private void HandleClick(string name, string id)
-    {
-        NavigationManager.NavigateTo($"{name}/{id}", true);
-    }
-
-
-
+  
     private void ToggleNavMenu()
     {
         collapseNavMenu = !collapseNavMenu;

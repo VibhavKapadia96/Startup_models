@@ -62,7 +62,7 @@ namespace Startup_API.Models
         {
             IQueryable<Categories> query = appDbContext.Categories;
 
-            query = query.Where(e => e.Parent_Id != -1);
+            query = query.Where(e => e.status == "live").OrderBy(e => e.Parent_Id);
 
             return await query.ToListAsync();
         }
