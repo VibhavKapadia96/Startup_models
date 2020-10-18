@@ -1,0 +1,66 @@
+﻿@inherits TopNavBase
+
+@if (Categories != null) { 
+<div class="topnav">
+    <a class="active" href="#home">Home</a>
+    <a href="#news">News</a>
+    <a href="#contact">Contact</a>
+    <a href="#about">About</a>
+</div>
+<div class="sidenav">
+    <a href="#about">About</a>
+    <a href="#services">Services</a>
+    <a href="#clients">Clients</a>
+    <a href="#contact">Contact</a>
+    @foreach (Startup_models.Categories Category in Categories)
+    {
+
+        <button class="dropdown-btn" @onclick="click">
+            @Category.Category_Name
+            <i class="fa fa-caret-down"></i>
+        </button>
+
+        foreach (Startup_models.Categories Category1 in Categories)
+        {
+
+
+            <div class="dropdown-container" style="display:@show">
+                <a href="#">Link 1</a>
+                <a href="#">Link 2</a>
+                <a href="#">Link 3</a>
+            </div>
+
+
+        }
+
+    }
+
+
+    <a href="#contact">Search</a>
+</div>
+}
+
+@code {
+  
+    private string show = "none";
+
+
+    private void click()
+    {
+
+        if (show == "none")
+        {
+            show = "block";
+        }
+        else
+        {
+            show = "none";
+        }
+
+    }
+
+
+
+
+
+}}

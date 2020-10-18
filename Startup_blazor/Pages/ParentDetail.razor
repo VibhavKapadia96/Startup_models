@@ -1,4 +1,4 @@
-﻿@page "/{id}/{name}"
+﻿@page "/{name}/{id}"
 @inherits ParentDetailBase
 
 
@@ -62,7 +62,7 @@ else
 
     private void HandleClick(string name, string id)
     {
-        NavigationManager.NavigateTo($"{id}/{name}", true);
+        NavigationManager.NavigateTo($"{name}/{id}", true);
     }
 
 

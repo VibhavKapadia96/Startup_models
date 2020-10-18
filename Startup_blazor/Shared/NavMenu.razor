@@ -1,4 +1,4 @@
-﻿@inherits ParentsNav
+﻿@inherits NavMenuBase
 
 <div class="top-row pl-4 navbar navbar-dark">
     <a class="navbar-brand" href="">Catlyse</a>
@@ -6,6 +6,23 @@
         <span class="navbar-toggler-icon"></span>
     </button>
 </div>
+
+<ul class="nav flex-column">
+    <li class="nav-item px-3">
+        <NavLink class="nav-link" href="/identity/account/login" Match="NavLinkMatch.All">
+            <span class="oi oi-lock-locked" aria-hidden="true"></span>login
+        </NavLink>
+    </li>
+</ul>
+
+<ul class="nav flex-column">
+    <li class="nav-item px-3">
+        <NavLink class="nav-link" href="/identity/account/logout" Match="NavLinkMatch.All">
+            <span class="oi oi-lock-locked" aria-hidden="true"></span>Logout
+        </NavLink>
+    </li>
+</ul>
+
 
 @if (Categories == null)
 {
@@ -18,65 +35,69 @@ else
 <div class="@NavMenuCssClass" @onclick="ToggleNavMenu">
 
     @{
-
-        foreach (Startup_models.Categories category in Categories)
-        {
+        
+            foreach (Startup_models.Categories category in Categories)
+            {
 
             if (category.Parent_Id == 0)
             {
 
-                <ul class="nav flex-column">
-                    <li class="nav-item px-3">
-                        <NavLink class="nav-link" href="@($"{category.Category_Name}/{category.Id}")" Match="NavLinkMatch.All" @onclick="(() => HandleClick(category.Category_Name, category.Id.ToString()))">
-                            <span class="oi" aria-hidden="true"></span> @category.Category_Name
-                        </NavLink>
+            <ul class="nav flex-column">
+                <li class="nav-item px-3">
+                    <NavLink class="nav-link" href="@($"{category.Category_Name}/{category.Id}")" Match="NavLinkMatch.All" @onclick="(() => HandleClick(category.Category_Name, category.Id.ToString()))">
+                        <span class="oi" aria-hidden="true"></span> @category.Category_Name
+                        <button @onclick="click"></button>
+                    </NavLink>
 
-                        @{ getChild(category); }
-
-
-                    </li>
-                </ul>
-
-                                }
-                            }
+                    @{ getChild(category); }
 
 
+                </li>
+            </ul>
 
-
-
-
-                            void getChild(Startup_models.Categories parent)
-                            {
-
-                                var children = Categories.Where(e => e.Parent_Id == parent.Id).OrderBy(e => e.Id);
-                                
-                                if (children != null && children.Any())
-                                {
-
-                                        <ul class="nav flex-column">
-                                            @foreach (Startup_models.Categories child in children)
-                                            {
-
-                                                <li class="nav-item px-3">
-                                                    <NavLink class="nav-link" href="@($"{child.Category_Name}/{child.Id}")" Match="NavLinkMatch.All" @onclick="(() => HandleClick(child.Category_Name, child.Id.ToString()))">
-                                                        <span class="oi" aria-hidden="true"></span> @child.Category_Name
-                                                    </NavLink>
-                                                    @{getChild(child);}
-                                                </li>
-                                            }
-                                        </ul>
             }
-        }
-
-    }
+            }
 
 
 
-</div>
+            void getChild(Startup_models.Categories parent)
+            {
+
+            var children = Categories.Where(e => e.Parent_Id == parent.Id).OrderBy(e => e.Id);
+
+            if (children != null && children.Any())
+            {
+
+            <ul class="nav flex-column" style="display:@show">
+                @foreach (Startup_models.Categories child in children)
+                {
+
+                    <li class="nav-item px-3">
+                        <NavLink class="nav-link" href="@($"{child.Category_Name}/{child.Id}")" Match="NavLinkMatch.All" @onclick="(() => HandleClick(child.Category_Name, child.Id.ToString()))">
+                            <span class="oi" aria-hidden="true"></span> @child.Category_Name
+
+                        </NavLink>
+                        @{getChild(child);}
+                    </li>
+                }
+            </ul>
+            }
+            }
+
+
+
+            }
+
+
+
+    </div>
 }
 
 @code {
     private bool collapseNavMenu = true;
+
+    private bool expandSubNav;
+    private string show = "none";
 
     private string NavMenuCssClass => collapseNavMenu ? "collapse" : null;
 
@@ -85,12 +106,25 @@ else
         collapseNavMenu = !collapseNavMenu;
     }
 
+    private void click() {
+
+        if (show == "none")
+        {
+            show = "block";
+        }
+        else {
+            show = "none";
+        }
+
+    }
+
+
     @inject NavigationManager NavigationManager;
 
     private void HandleClick(string name, string id)
     {
-        NavigationManager.NavigateTo($"{id}/{name}", true);
+        NavigationManager.NavigateTo($"{name}/{id}", true);
     }
 
-   
+
 }

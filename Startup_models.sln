@@ -7,7 +7,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Startup_models", "Startup_m
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Startup_blazor", "Startup_blazor\Startup_blazor.csproj", "{C871FC1C-00CD-4813-B759-2EE48D788BE0}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Startup_API", "Startup_API\Startup_API.csproj", "{E8F4425B-FE1F-4AA0-9BD9-53801F80433F}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Startup_API", "Startup_API\Startup_API.csproj", "{E8F4425B-FE1F-4AA0-9BD9-53801F80433F}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Startup_Frontend", "Startup_Frontend\Startup_Frontend.csproj", "{C9E6AF6F-FE09-4BF4-A797-E52BD3EC9957}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -27,6 +29,10 @@ Global
 		{E8F4425B-FE1F-4AA0-9BD9-53801F80433F}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{E8F4425B-FE1F-4AA0-9BD9-53801F80433F}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{E8F4425B-FE1F-4AA0-9BD9-53801F80433F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C9E6AF6F-FE09-4BF4-A797-E52BD3EC9957}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C9E6AF6F-FE09-4BF4-A797-E52BD3EC9957}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C9E6AF6F-FE09-4BF4-A797-E52BD3EC9957}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C9E6AF6F-FE09-4BF4-A797-E52BD3EC9957}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

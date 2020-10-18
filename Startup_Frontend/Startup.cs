@@ -1,12 +1,16 @@
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
 using Microsoft.AspNetCore.Builder;
+using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using Startup_blazor.Services;
-using System;
 
-namespace Startup_blazor
+namespace Startup_Frontend
 {
     public class Startup
     {
@@ -21,17 +25,10 @@ namespace Startup_blazor
         // For more information on how to configure your application, visit https://go.microsoft.com/fwlink/?LinkID=398940
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddAuthentication("Identity.Application").AddCookie();
             services.AddRazorPages();
             services.AddServerSideBlazor();
-            services.AddHttpClient<ICategoryService, CategoryService>(client =>
-            {
-                client.BaseAddress = new Uri("https://localhost:44322/");
-            });
-            services.AddHttpClient<ILinkRepositoryService, LinkRepositoryService>(client =>
-            {
-                client.BaseAddress = new Uri("https://localhost:44322/");
-            });
+           
+
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -52,8 +49,7 @@ namespace Startup_blazor
             app.UseStaticFiles();
 
             app.UseRouting();
-            app.UseAuthentication();
-            app.UseAuthorization();
+
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapBlazorHub();
