@@ -41,34 +41,7 @@
     <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"></script>
     <script src="https://unpkg.com/feather-icons@4.10.0/dist/feather.min.js"></script>
-  
-    <script>
-        var myVar = setInterval(myTimer, 0.1);
-      
-        function myTimer() {
-            feather.replace();
-            $(".btn").on("click", function (e) {
-                e.preventDefault()
-                e.stopImmediatePropagation()
-                $(this).closest("li").toggleClass('active')
-                $(this).children('.fa').toggleClass('fa-caret-right fa-caret-down');
-               
-            });
-            $('.nav ul li a').each(function () {
-                $(this).children(".btn").children(".fa").toggleClass('fa-caret-right fa-caret-down');
-                if ($(this).hasClass('active') && $(this).parents('li').hasClass('active') == false) {
-                    $(this).parents("li").toggleClass('active');
-                }
-
-            });
-          
-            $('.list-group-item').on('click', function () {
-                $('.fas', this)
-                    .toggleClass('fa-angle-right')
-                    .toggleClass('fa-angle-down');
-            });
-        }
-
+    <script src="~/js/topnav.js">     
     </script>
   
     <script src="_framework/blazor.server.js"></script>
