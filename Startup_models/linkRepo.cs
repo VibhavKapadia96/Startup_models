@@ -1,4 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using System;
+using System.ComponentModel.DataAnnotations;
 
 namespace Startup_models
 {
@@ -13,6 +14,9 @@ namespace Startup_models
         public string link_description { get; set; }
         public string status { get; set; } = "live";
         public int vote { get; set; } = 0;
+
+        public DateTime insert_date { get; set; } = DateTime.Now;
+
         [Required]
         public int categoryId { get; set; }
         [Required]

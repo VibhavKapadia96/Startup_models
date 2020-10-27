@@ -5,110 +5,89 @@
     <h1 class="display-5">@name</h1>
 </div>
 
-@if (linkTypes != null && linkRepositories != null)
+
+<button onclick="window.location.href ='@($"{name}/{id}")'" id="myBtn" title="Go to top">Top</button>
+
+
+<div class="container p-t-2">
+    <div class="row">
+        <div class="col-sm-12">
+            <div class="float-right">
+                <a href="javascript:void(0);" onclick="window.location.href ='@($"{name}/{id}#links")' ">Go to Resources</a>
+            </div>
+        </div>
+    </div>
+</div>
+
+@for (int i = 0; i < 10; i++)
 {
-
-
-
-    @foreach (Startup_models.LinkType linkType in linkTypes)
-    {
-
-        var all_links_repo = linkRepositories.Where(e => e.linkTypeId == linkType.Id).OrderBy(e => e.Id);
-
-        if (all_links_repo != null || all_links_repo.Any()) {
-
-        <div class="container p-t-2">
-            <div class="row" id="about">
-                <div class="col-sm-12">
-                    <h4 class="m-b-2"><NavLink href="@($"{name}/{id}/{linkType.Linktype_Name}/{linkType.Id}")" style="color:black;background-color:transparent">@linkType.Linktype_Name Links</NavLink></h4>
-                    <div class="list-group">
-
-                        @foreach (Startup_models.LinkRepository linkRepository in all_links_repo)
-                        {
-
-                            @if (linkRepository.link_iframe != null)
-                            {
-                                // @((MarkupString)@linkRepository.link_iframe)
-                            }
-
-                            <div>
-                                <NavLink href="@linkRepository.link" target="_blank">@linkRepository.link_description  </NavLink>
-
-                                <button class="bg-transparent border-0"><i class="fa fa-television" style="padding-left:10px;"></i></button>
-                                <button class="bg-transparent border-0"><i class="fa fa-thumbs-up" style="padding-left:10px;"></i></button>
-                                <button class="bg-transparent border-0"><i class="fa fa-thumbs-down" style="padding-left:10px;"></i></button>
-                            </div>
-
-
-                        }
-
-                    </div>
-
-                </div>
-            </div>
-        </div>
-        <br />
-        <hr />
-        <br />
-
-        }
-    }
-
-    @*<div class="container p-t-2">
-        <div class="row" id="about">
+    <div class="container p-t-2">
+        <div class="row">
             <div class="col-sm-12">
-                <h3 class="m-b-2">What You'll Learn</h3>
+                <h4 class="m-b-2">Testing 1</h4>
                 <div class="list-group">
-                    <a href="#"><strong>MongoDB</strong>: NoSQL database</a>
-                    <a href="#" class="list-group-item"><strong>Angular</strong>: JavaScript framework </a>
-                    <a href="#" class="list-group-item"><strong>Express</strong>: Framework for Node</a>
-                    <a href="#" class="list-group-item"><strong>Node.js</strong>: JavaScript environment</a>
-                    <a href="#" class="list-group-item"><strong>ES2015</strong>: Latest version of JavaScript</a>
-                    <a href="#" class="list-group-item"><strong>Babel</strong>: JavaScript compiler</a>
+                    <p>The Graduate Record Examinations is a standardized test that is an admissions requirement for many graduate schools in the United States and Canada. The GRE is owned and administered by Educational Testing Service. The test was established in 1936 by the Carnegie Foundation for the Advancement of Teaching.</p>
                 </div>
 
             </div>
         </div>
     </div>
-
+   
     <br />
-
-    <div class="container p-t-2">
-        <div class="row" id="about">
-            <div class="col-sm-12">
-                <h3 class="m-b-2">What You'll Learn</h3>
-                <div class="list-group">
-                    <div class="embed-responsive embed-responsive-16by9">
-                        <iframe class="embed-responsive-item" src="https://www.youtube.com/embed/vFyJp8TM69Q" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
-                    </div>
-                    <a href="#" class="list-group-item"><strong>MongoDB</strong>: NoSQL database</a>
-                    <a href="#" class="list-group-item"><strong>Angular</strong>: JavaScript framework </a>
-                    <a href="#" class="list-group-item"><strong>Express</strong>: Framework for Node</a>
-                    <a href="#" class="list-group-item"><strong>Node.js</strong>: JavaScript environment</a>
-                    <a href="#" class="list-group-item"><strong>ES2015</strong>: Latest version of JavaScript</a>
-                    <a href="#" class="list-group-item"><strong>Babel</strong>: JavaScript compiler</a>
-                </div>
-
-            </div>
-        </div>
-    </div>
-    <br />
-
-    <div class="container p-t-2">
-        <div class="row" id="about">
-            <div class="col-sm-12">
-                <h3 class="m-b-2">What You'll Learn</h3>
-                <div class="list-group">
-                    <a href="#" class="list-group-item"><strong>MongoDB</strong>: NoSQL database</a>
-                    <a href="#" class="list-group-item"><strong>Angular</strong>: JavaScript framework </a>
-                    <a href="#" class="list-group-item"><strong>Express</strong>: Framework for Node</a>
-                    <a href="#" class="list-group-item"><strong>Node.js</strong>: JavaScript environment</a>
-                    <a href="#" class="list-group-item"><strong>ES2015</strong>: Latest version of JavaScript</a>
-                    <a href="#" class="list-group-item"><strong>Babel</strong>: JavaScript compiler</a>
-                </div>
-
-            </div>
-        </div>
-    </div>*@
 
 }
+
+<div id="links">
+  
+            <br />
+            <hr />
+            <br />
+
+            @if (linkTypes != null && linkRepositories != null)
+            {
+
+                @foreach (Startup_models.LinkType linkType in linkTypes)
+                {
+
+                    var all_links_repo = linkRepositories.Where(e => e.linkTypeId == linkType.Id).OrderBy(e => e.Id);
+                    if (all_links_repo != null || all_links_repo.Any())
+                    {
+
+                        <div class="container p-t-2">
+                            <div class="row">
+                                <div class="col-sm-12">
+                                    <h4 class="m-b-2"><NavLink href="@($"{name}/{id}/{linkType.Linktype_Name}/{linkType.Id}")" style="color:black;background-color:transparent">@linkType.Linktype_Name Links</NavLink></h4>
+                                    <div class="list-group">
+
+                                        @foreach (Startup_models.LinkRepository linkRepository in all_links_repo)
+                                        {
+
+                                            @if (linkRepository.link_iframe != null)
+                                            {
+                                                // @((MarkupString)@linkRepository.link_iframe)
+                                            }
+
+                                            <div>
+                                                <NavLink href="@linkRepository.link" target="_blank">@linkRepository.link_description  </NavLink>
+                                                <button class="bg-transparent border-0" onclick="window.location.href ='@($"{name}/{id}/watch/{linkRepository.Id}")'"><i class="fa fa-television" style="padding-left:10px;"></i></button>
+                                                <button class="bg-transparent border-0"><i class="fa fa-thumbs-up" style="padding-left:10px;"></i></button>
+                                                <button class="bg-transparent border-0"><i class="fa fa-thumbs-down" style="padding-left:10px;"></i></button>
+                                            </div>
+
+
+                                        }
+
+                                    </div>
+
+                                </div>
+                            </div>
+                        </div>
+
+                        <br />
+
+                    }
+                }
+
+
+            }
+        </div>

@@ -15,7 +15,8 @@ namespace Startup_models
         public string link_description { get; set; }
         public string status { get; set; } = "live";
         public int vote { get; set; } = 0;
-       
+
+        public DateTime insert_date { get; set; } = DateTime.Now;
         public int categoriesId { get; set; }
        
         public Categories categories { get; set; }
