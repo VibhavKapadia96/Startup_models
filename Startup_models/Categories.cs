@@ -12,6 +12,7 @@ namespace Startup_models
         public int Parent_Id { get; set; } = 0;
         public string status { get; set; } = "live";
         public string topParentMapper { get; set; }
+        public string seo_keywords { get; set; }
         public DateTime insert_date { get; set; } = DateTime.Now;
     }
 }

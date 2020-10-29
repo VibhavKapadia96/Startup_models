@@ -12,6 +12,7 @@ namespace Startup_models
         public string Linktype_Name { get; set; }
         public string status { get; set; } = "live";
         public DateTime insert_date { get; set; } = DateTime.Now;
+        public string seo_keywords { get; set; }
 
     }
 }

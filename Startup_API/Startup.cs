@@ -4,6 +4,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using Startup_API.Middleware;
 using Startup_API.Models;
 
 namespace Startup_API
@@ -21,8 +22,7 @@ namespace Startup_API
         public void ConfigureServices(IServiceCollection services)
         {
 
-            services.AddDbContext<AppDbContext>(options =>
-                                                            options.UseSqlServer(Configuration.GetConnectionString("DBConnection")));
+            services.AddDbContext<AppDbContext>(options => options.UseSqlServer(Configuration.GetConnectionString("DBConnection")));
             services.AddScoped<ICategories, CRUDCategories>();
             services.AddScoped<ISources, CRUDSources>();
             services.AddScoped<ILinkTypes, CRUDLinkTypes>();
@@ -40,14 +40,10 @@ namespace Startup_API
                 app.UseDeveloperExceptionPage();
             }
 
+            app.UseMiddleware<AuthMiddleware>();
             app.UseHttpsRedirection();
-
             app.UseRouting();
-
             app.UseAuthorization();
-
-
-
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllers();

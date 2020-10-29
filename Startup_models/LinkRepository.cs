@@ -16,6 +16,7 @@ namespace Startup_models
         public string status { get; set; } = "live";
         public int vote { get; set; } = 0;
 
+        public string seo_keywords { get; set; }
         public DateTime insert_date { get; set; } = DateTime.Now;
         public int categoriesId { get; set; }
        

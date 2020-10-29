@@ -13,6 +13,7 @@ namespace Startup_blazor.Services
         public CategoryService(HttpClient httpClient)
         {
             this.httpClient = httpClient;
+            this.httpClient.DefaultRequestHeaders.Add("admin", "admin");
         }
 
         public async Task<IEnumerable<Categories>> Getcategories()

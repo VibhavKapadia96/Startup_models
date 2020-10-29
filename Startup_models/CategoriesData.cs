@@ -11,6 +11,7 @@ namespace Startup_models
         public string Section_HTML { get; set; }
         public int Section_Level { get; set; }
         public int categoriesId { get; set; }
+        public string seo_keywords { get; set; }
         public Categories categories { get; set; }
     }
 }

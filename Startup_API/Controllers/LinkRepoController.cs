@@ -30,6 +30,8 @@ namespace Startup_API.Controllers
         {
             try
             {
+              //  var isComplete = Request.Headers[""];
+
                 return Ok(await linkRepo.GetLinks());
             }
             catch (Exception)
