@@ -13,6 +13,5 @@ namespace Startup_API.Models
         Task<LinkType> UpdateLinkType(LinkType linkType);
         Task<LinkType> DeleteLinkType(int linkTypeId);
 
-
     }
 }
