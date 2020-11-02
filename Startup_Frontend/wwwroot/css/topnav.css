@@ -408,3 +408,7 @@ a.active {
         padding-left: 0
     }
 }
+
+.wrapper {
+    min-height: calc(55vh - 70px);
+}
