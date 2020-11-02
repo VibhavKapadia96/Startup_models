@@ -11,7 +11,6 @@
     "IIS Express": {
       "commandName": "IISExpress",
       "launchBrowser": true,
-      "launchUrl": "GRE/1",
       "environmentVariables": {
         "ASPNETCORE_ENVIRONMENT": "Development"
       }
