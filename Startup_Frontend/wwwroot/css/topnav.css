@@ -309,10 +309,8 @@ a.active {
     padding: 0 !important
 }
 
-
-
 .footer-big {
-    padding: 105px 0 65px 0
+    padding: 35px 0 0 0
 }
 
     .footer-big .footer-widget {
@@ -356,7 +354,7 @@ a.active {
 .mini-footer {
     background: #192027;
     text-align: center;
-    padding: 32px 0
+   
 }
 
     .mini-footer p {
@@ -410,5 +408,5 @@ a.active {
 }
 
 .wrapper {
-    min-height: calc(55vh - 70px);
+    min-height: calc(64vh - 70px);
 }
