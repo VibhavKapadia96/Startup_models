@@ -1,8 +1,9 @@
-﻿using Microsoft.EntityFrameworkCore.Migrations;
+﻿using System;
+using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace Startup_API.Migrations
 {
-    public partial class Intial1 : Migration
+    public partial class Initial : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -15,7 +16,10 @@ namespace Startup_API.Migrations
                     Category_Name = table.Column<string>(nullable: false),
                     Category_Parent = table.Column<string>(nullable: true),
                     Parent_Id = table.Column<int>(nullable: false),
-                    status = table.Column<string>(nullable: true)
+                    status = table.Column<string>(nullable: true),
+                    topParentMapper = table.Column<string>(nullable: true),
+                    seo_keywords = table.Column<string>(nullable: true),
+                    insert_date = table.Column<DateTime>(nullable: false)
                 },
                 constraints: table =>
                 {
@@ -33,6 +37,7 @@ namespace Startup_API.Migrations
                     link_description = table.Column<string>(nullable: true),
                     status = table.Column<string>(nullable: true),
                     vote = table.Column<int>(nullable: false),
+                    insert_date = table.Column<DateTime>(nullable: false),
                     categoryId = table.Column<int>(nullable: false),
                     linkTypeId = table.Column<int>(nullable: false),
                     sourcesId = table.Column<int>(nullable: false)
@@ -49,7 +54,9 @@ namespace Startup_API.Migrations
                     Id = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     Linktype_Name = table.Column<string>(nullable: false),
-                    status = table.Column<string>(nullable: true)
+                    status = table.Column<string>(nullable: true),
+                    insert_date = table.Column<DateTime>(nullable: false),
+                    seo_keywords = table.Column<string>(nullable: true)
                 },
                 constraints: table =>
                 {
@@ -63,7 +70,9 @@ namespace Startup_API.Migrations
                     Id = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     Source_Name = table.Column<string>(nullable: false),
-                    status = table.Column<string>(nullable: true)
+                    status = table.Column<string>(nullable: true),
+                    insert_date = table.Column<DateTime>(nullable: false),
+                    seo_keywords = table.Column<string>(nullable: true)
                 },
                 constraints: table =>
                 {
@@ -81,6 +90,8 @@ namespace Startup_API.Migrations
                     link_description = table.Column<string>(nullable: true),
                     status = table.Column<string>(nullable: true),
                     vote = table.Column<int>(nullable: false),
+                    seo_keywords = table.Column<string>(nullable: true),
+                    insert_date = table.Column<DateTime>(nullable: false),
                     categoriesId = table.Column<int>(nullable: false),
                     linkTypeId = table.Column<int>(nullable: false),
                     sourcesId = table.Column<int>(nullable: false)
