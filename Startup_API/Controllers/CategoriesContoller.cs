@@ -14,7 +14,6 @@ namespace Startup_API.Controllers
     {
         private readonly ICategories categories;
         private readonly ILinkRepo linkRepo;
-
         public CategoriesController(ICategories categories, ILinkRepo linkRepo)
         {
             this.categories = categories;
@@ -57,8 +56,6 @@ namespace Startup_API.Controllers
 
                 return StatusCode(StatusCodes.Status500InternalServerError, "Error");
             }
-
-
         }
 
         [HttpGet("{name}")]
