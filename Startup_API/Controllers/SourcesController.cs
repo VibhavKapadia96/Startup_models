@@ -13,8 +13,8 @@ namespace Startup_API.Controllers
     {
 
         private readonly ISources sources;
-        private readonly ILinkRepo linkRepo;
-        public SourcesController(ISources sources, ILinkRepo linkRepo)
+        private readonly ILinkRepository linkRepo;
+        public SourcesController(ISources sources, ILinkRepository linkRepo)
         {
             this.sources = sources;
             this.linkRepo = linkRepo;
@@ -142,7 +142,7 @@ namespace Startup_API.Controllers
                     return NotFound($"Source with Id = {id} not found");
                 }
 
-                var isDatainLinkRepo = await linkRepo.GetLinkbySourceId(id);
+                var isDatainLinkRepo = await linkRepo.GetLinkbyName(id.ToString());
 
                 if (isDatainLinkRepo != null)
                 {

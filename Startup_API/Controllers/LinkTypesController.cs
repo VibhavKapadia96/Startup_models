@@ -13,8 +13,8 @@ namespace Startup_API.Controllers
     {
 
         private readonly ILinkTypes linkTypes;
-        private readonly ILinkRepo linkRepo;
-        public LinkTypesController(ILinkTypes linkTypes, ILinkRepo linkRepo)
+        private readonly ILinkRepository linkRepo;
+        public LinkTypesController(ILinkTypes linkTypes, ILinkRepository linkRepo)
         {
             this.linkTypes = linkTypes;
             this.linkRepo = linkRepo;
@@ -144,7 +144,7 @@ namespace Startup_API.Controllers
                     return NotFound($"Link Type with Id = {id} not found");
                 }
 
-                var isDatainLinkRepo = await linkRepo.GetLinkbyLinkTypeId(id);
+                var isDatainLinkRepo = await linkRepo.GetLinkbyName(id.ToString());
 
                 if (isDatainLinkRepo != null)
                 {

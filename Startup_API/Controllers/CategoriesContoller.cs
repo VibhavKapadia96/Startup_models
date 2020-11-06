@@ -13,8 +13,8 @@ namespace Startup_API.Controllers
     public class CategoriesController : ControllerBase
     {
         private readonly ICategories categories;
-        private readonly ILinkRepo linkRepo;
-        public CategoriesController(ICategories categories, ILinkRepo linkRepo)
+        private readonly ILinkRepository linkRepo;
+        public CategoriesController(ICategories categories, ILinkRepository linkRepo)
         {
             this.categories = categories;
             this.linkRepo = linkRepo;
@@ -146,7 +146,7 @@ namespace Startup_API.Controllers
                     return NotFound($"Employee with Id = {id} not found");
                 }
 
-                var isDatainLinkRepo = await linkRepo.GetLinkbyCategoryId(id);
+                var isDatainLinkRepo = await linkRepo.GetLinkbyName(id.ToString());
 
                 if (isDatainLinkRepo != null) {
                     return BadRequest($"Category linked to data Links");
