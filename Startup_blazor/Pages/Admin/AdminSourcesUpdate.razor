@@ -1,0 +1,38 @@
+﻿@page "/Admin/Sources/{name}/{id}"
+@page "/Admin/Sources"
+@inherits AdminSourcesUpdateBase
+
+<div class="container">
+
+    <EditForm Model="@sources" OnValidSubmit="updateResources">
+
+        <h3>Update Sources</h3>
+        <hr />
+        <div class="form-group row">
+            <label for="firstName" class="col-sm-2 col-form-label">
+                Source Name
+            </label>
+            <div class="col-sm-10">
+                <InputText id="firstName" class="form-control" placeholder="First Name"
+                           @bind-Value="sources.Source_Name" />
+            </div>
+        </div>
+        <button class="btn btn-primary" type="submit">Submit</button>
+
+    </EditForm>
+
+
+    @if (sources_enum != null)
+    {
+
+        foreach (Startup_models.Sources sources in sources_enum)
+        {
+
+            <NavLink href=@($"/Admin/Sources/{sources.Source_Name}/{sources.Id}")>@sources.Source_Name</NavLink><br />
+
+        }
+
+    }
+
+</div>
+

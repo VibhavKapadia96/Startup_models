@@ -1,5 +1,7 @@
-﻿using System;
+﻿using Microsoft.AspNetCore.Http;
+using System;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Startup_models
 {
@@ -14,5 +16,7 @@ namespace Startup_models
         public string topParentMapper { get; set; }
         public string seo_keywords { get; set; }
         public DateTime insert_date { get; set; } = DateTime.Now;
+       
+        public string category_image_path { get; set; }
     }
 }

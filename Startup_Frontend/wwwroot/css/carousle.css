@@ -1,0 +1,51 @@
+﻿/*Carousle*/
+
+.carousel-item {
+    height: 60vh;
+    background-repeat: no-repeat;
+    background-position: center center;
+    background-size: cover;
+}
+
+.ourworks-box {
+    width: 60%;
+    justify-content: center;
+    text-align: center;
+}
+
+.our-works-head {
+    font-size: 30px;
+    font-weight: 400;
+    color: black;
+}
+
+
+.card-deck {
+    margin: 0 -15px;
+    justify-content: space-between;
+}
+
+    .card-deck .card {
+        margin: 0 0 1rem;
+    }
+
+@media (min-width: 576px) and (max-width: 767.98px) {
+    .card-deck .card {
+        -ms-flex: 0 0 48.7%;
+        flex: 0 0 48.7%;
+    }
+}
+
+@media (min-width: 768px) and (max-width: 991.98px) {
+    .card-deck .card {
+        -ms-flex: 0 0 32%;
+        flex: 0 0 32%;
+    }
+}
+
+@media (min-width: 992px) {
+    .card-deck .card {
+        -ms-flex: 0 0 24%;
+        flex: 0 0 24%;
+    }
+}

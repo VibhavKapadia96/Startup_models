@@ -1,0 +1,61 @@
+﻿@page "/Admin/Categories"
+@using System.IO
+@inherits AdminCategoriesBase
+
+
+<div class="container">
+    <EditForm Model="@categories" OnSubmit="AddCategory" >
+        <h3>Add Category</h3>
+        <hr />
+        <div class="form-group row">
+            <label for="firstName" class="col-sm-2 col-form-label">
+                First Name
+            </label>
+            <div class="col-sm-10">
+                <InputText id="firstName" class="form-control" placeholder="First Name"
+                           @bind-Value="categories.Category_Name" />
+            </div>
+        </div>
+        <div class="form-group row">
+            <label for="firstName" class="col-sm-2 col-form-label">
+                Image
+            </label>
+            <div class="col-sm-10">
+                <BlazorInputFile.InputFile OnChange="HandleFileSelectedAsync"></BlazorInputFile.InputFile> <br /> @status
+            </div>
+        </div>
+        <button type="submit">Submit</button>
+
+    </EditForm>
+
+
+    @if (category != null)
+    {
+
+        foreach (Startup_models.Categories categories in category)
+        {
+
+            <NavLink href=@($"/Admin/List/{categories.Category_Name}/{categories.Id}")>@categories.Category_Name</NavLink><br />
+
+        }
+
+    }
+
+</div>
+
+
+
+@code {
+    string status;
+
+    protected async Task HandleFileSelectedAsync(IFileListEntry[] files)
+    {
+        var img = files.FirstOrDefault();
+        if (img != null)
+        {
+            Image = img;
+            status = $"{img.Name}";
+        }
+    }
+
+}

@@ -26,11 +26,11 @@ namespace Startup_blazor
             services.AddServerSideBlazor();
             services.AddHttpClient<ICategoryService, CategoryService>(client =>
             {
-                client.BaseAddress = new Uri("https://localhost:44322/");
+                client.BaseAddress = new Uri("https://localhost:5001/");
             });
             services.AddHttpClient<ILinkRepositoryService, LinkRepositoryService>(client =>
             {
-                client.BaseAddress = new Uri("https://localhost:44322/");
+                client.BaseAddress = new Uri("https://localhost:5001/");
             });
         }
 

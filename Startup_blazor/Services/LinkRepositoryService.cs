@@ -13,6 +13,7 @@ namespace Startup_blazor.Services
         public LinkRepositoryService(HttpClient httpClient)
         {
             this.httpClient = httpClient;
+            this.httpClient.DefaultRequestHeaders.Add("admin", "admin");
         }
 
 

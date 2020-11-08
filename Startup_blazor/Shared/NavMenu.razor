@@ -110,7 +110,7 @@ else
 
     @inject NavigationManager NavigationManager;
 
-    private void HandleClick(string name, string id)
+    void HandleClick(string name, string id)
     {
         NavigationManager.NavigateTo($"{name}/{id}", true);
     }

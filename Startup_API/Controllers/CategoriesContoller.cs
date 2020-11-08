@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Mvc;
 using Startup_API.Models;
 using Startup_models;
 using System;
+using System.IO;
 using System.Threading.Tasks;
 
 namespace Startup_API.Controllers
@@ -83,8 +84,6 @@ namespace Startup_API.Controllers
         [HttpPost]
         public async Task<ActionResult<Categories>> CreateCategory(Categories category)
         {
-
-
             try
             {
                 if (category == null)
@@ -93,22 +92,21 @@ namespace Startup_API.Controllers
 
                 var result = await categories.GetCategorybyName(category.Category_Name, category.Category_Parent);
                 if (result != null)
-
                 {
                     ModelState.AddModelError("Category_Name", "Category Name Already Created");
                     return BadRequest(ModelState);
                 }
 
-
                 var createdCategory = await categories.AddCategory(category);
+
 
                 return CreatedAtAction(nameof(GetCategory),
                     new { id = createdCategory.Id }, createdCategory);
             }
-            catch (Exception)
+            catch (Exception ex)
             {
                 return StatusCode(StatusCodes.Status500InternalServerError,
-                    "Error creating new employee record");
+                    "Error creating new employee record " + ex.Message);
             }
         }
 

@@ -18,7 +18,7 @@ namespace Startup_blazor.Shared
         protected override async Task OnInitializedAsync()
         {
             Categories = (await CategoryService.Getcategories()).ToList();
-
+           
         }
 
 

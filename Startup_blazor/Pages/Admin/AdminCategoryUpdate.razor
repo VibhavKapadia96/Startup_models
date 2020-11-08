@@ -1,0 +1,42 @@
+﻿@page "/Admin/Update/{name}/{id}"
+@inherits AdminCategoryUpdateBase
+
+<div class="container">
+    <EditForm Model="@categories" OnValidSubmit="updateCategory">
+
+        <h3>Update Category</h3>
+        <hr />
+        <div class="form-group row">
+            <label for="firstName" class="col-sm-2 col-form-label">
+                Category Name
+            </label>
+            <div class="col-sm-10">
+                <InputText id="firstName" class="form-control" placeholder="First Name"
+                           @bind-Value="categories.Category_Name" />
+            </div>
+        </div>
+        <button class="btn btn-primary" type="submit">Submit</button>
+
+    </EditForm>
+
+    <EditForm Model="@categoriesChild" OnValidSubmit="addChild">
+
+        <h3>Add Child</h3>
+        <hr />
+        <div class="form-group row">
+            <label for="firstName" class="col-sm-2 col-form-label">
+                Chid Name
+            </label>
+            <div class="col-sm-10">
+                <InputText id="firstName" class="form-control" placeholder="First Name"
+                           @bind-Value="categoriesChild.Category_Name" />
+            </div>
+        </div>
+        <button class="btn btn-primary" type="submit">Submit</button>
+
+    </EditForm>
+
+
+
+
+</div>

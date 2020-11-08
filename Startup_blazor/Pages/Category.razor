@@ -1,0 +1,120 @@
+﻿@page "/{name}/{id}"
+@inherits CategoryBase
+
+@code{
+
+    public Boolean isExpandable { get; set; } = false;
+
+    void expand()
+    {
+
+        isExpandable = !isExpandable;
+    }
+
+
+}
+
+<div class="container text-sm-center p-t-3" id="top">
+    <h1 class="display-5">@name</h1>
+</div>
+
+
+<div id="myBtn" title="Go to top">Top</div>
+
+
+<div class="container p-t-2">
+    <div class="row">
+        <div class="col-sm-12">
+            <div class="float-right">
+                @if (!isExpandable)
+                {
+
+                    <a href="javascript:void(0);" @onclick="expand">Go to Resources</a>
+                }
+                else
+                {
+                    <a href="javascript:void(0);" @onclick="expand">Go to About</a>
+                }
+            </div>
+        </div>
+    </div>
+</div>
+
+
+@if (!isExpandable)
+{
+    <div id="main">
+
+        @for (int i = 0; i < 10; i++)
+        {
+            <div class="container p-t-2">
+                <div class="row">
+                    <div class="col-sm-12">
+                        <h4 class="m-b-2">Testing 1</h4>
+                        <div class="list-group">
+                            <p>The Graduate Record Examinations is a standardized test that is an admissions requirement for many graduate schools in the United States and Canada. The GRE is owned and administered by Educational Testing Service. The test was established in 1936 by the Carnegie Foundation for the Advancement of Teaching.</p>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+
+            <br />
+
+        }
+    </div>
+}
+else
+{
+    <div id="links">
+
+        
+        @if (linkTypes != null && linkRepositories != null)
+        {
+
+            @foreach (Startup_models.LinkType linkType in linkTypes)
+            {
+
+                var all_links_repo = linkRepositories.Where(e => e.linkTypeId == linkType.Id).OrderBy(e => e.Id);
+                if (all_links_repo != null || all_links_repo.Any())
+                {
+
+                    <div class="container p-t-2">
+                        <div class="row">
+                            <div class="col-sm-12">
+                                <h4 class="m-b-2"><NavLink href="@($"{name}/{id}/{linkType.Linktype_Name}/{linkType.Id}")" style="color:black;background-color:transparent">@linkType.Linktype_Name Links</NavLink></h4>
+                                <div class="list-group">
+
+                                    @foreach (Startup_models.LinkRepository linkRepository in all_links_repo)
+                                    {
+
+                                        @if (linkRepository.link_iframe != null)
+                                        {
+                                            // @((MarkupString)@linkRepository.link_iframe)
+                                        }
+
+                                        <div>
+                                            <NavLink href="@linkRepository.link" target="_blank">@linkRepository.link_description  </NavLink>
+                                            <button class="bg-transparent border-0" onclick="window.location.href ='@($"{name}/{id}/watch/{linkRepository.Id}")'"><i class="fa fa-television" style="padding-left:10px;"></i></button>
+                                            <button class="bg-transparent border-0"><i class="fa fa-thumbs-up" style="padding-left:10px;"></i></button>
+                                            <button class="bg-transparent border-0"><i class="fa fa-thumbs-down" style="padding-left:10px;"></i></button>
+                                        </div>
+
+
+                                    }
+
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+
+                    <br />
+
+                }
+            }
+
+
+        }
+    </div>
+}

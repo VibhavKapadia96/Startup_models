@@ -13,5 +13,6 @@ namespace Startup_models
         public int categoriesId { get; set; }
         public string seo_keywords { get; set; }
         public Categories categories { get; set; }
+        public string categorydata_image_path { get; set; }
     }
 }

@@ -1,0 +1,97 @@
+﻿@inherits TopNavBase
+
+<div class="container-fluid">
+    <div class="row navbar-expand-md">
+        @if (category != null)
+        {
+            <nav class="col-md-3 col-lg-2 bg-light navbar-collapse collapse" id="sidenav">
+                <div class="sidebar-sticky flex-column w-100 mt-1">
+
+                    <ul class="nav flex-column" style="margin-bottom:5%;">
+                        <li class="drop-nav nav-item">
+
+                            <NavLink class="nav-link" href="@($"Admin/Categories")" Match="NavLinkMatch.Prefix">
+                                Add/Update Category
+                                <button class="btn" style="float:right;border:thin"> <i class="fa fa-caret-right"></i> </button>
+                            </NavLink>
+
+                        </li>
+                    </ul>
+
+                    <ul class="nav flex-column" style="margin-bottom:5%;">
+                        <li class="drop-nav nav-item">
+
+                            <NavLink class="nav-link" href="@($"Admin/Sources")" Match="NavLinkMatch.Prefix">
+                                Add/Update Sources
+                                <button class="btn" style="float:right;border:thin"> <i class="fa fa-caret-right"></i> </button>
+                            </NavLink>
+
+                        </li>
+                    </ul>
+
+                    @foreach (Startup_models.Categories parent in category)
+                    {
+                        if (parent.Parent_Id == 0)
+                        {
+                            <ul class="nav flex-column" style="margin-bottom:5%;">
+                                <li class="drop-nav nav-item">
+
+                                    <NavLink class="nav-link" href="@($"{parent.Category_Name}/{parent.Id}")" Match="NavLinkMatch.Prefix">
+                                        @parent.Category_Name
+                                        <button class="btn" style="float:right;border:thin"> <i class="fa fa-caret-right"></i> </button>
+                                    </NavLink>
+
+                                    @{getChild(parent);}
+                                </li>
+
+                            </ul>
+                        }
+
+
+                    }
+
+
+                    @{
+
+                        void getChild(Startup_models.Categories parent)
+                        {
+
+                            var children = category.Where(e => e.Parent_Id == parent.Id).OrderBy(e => e.Id);
+
+                            if (children != null && children.Any())
+                            {
+
+                                <ul class="nav flex-column">
+                                    @foreach (Startup_models.Categories child in children)
+                                    {
+
+                                        <li class="drop-nav nav-item">
+                                            <NavLink class="nav-link" href="@($"{child.Category_Name}/{child.Id}")" Match="NavLinkMatch.All">
+                                                @child.Category_Name
+                                                @{
+                                                    var check = category.Where(e => e.Parent_Id == child.Id).OrderBy(e => e.Id);
+                                                    if (check != null && check.Any())
+                                                    { <button class="btn" style="float:right;border:thin"> <i class="fa fa-caret-right"></i> </button> }
+
+                                                }
+                                            </NavLink>
+
+                                            @{getChild(child); }
+                                        </li>
+                                    }
+                                </ul>
+                            }
+                        }
+
+
+                    }
+
+
+
+
+
+                </div>
+            </nav>
+        }
+    </div>
+</div>

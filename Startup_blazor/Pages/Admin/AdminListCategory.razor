@@ -1,0 +1,66 @@
+﻿@page "/Admin/List/{name}/{id}"
+@inherits AdminListCategoryBase
+
+@if (category != null && category.Any() == true)
+{
+
+<div class="container">
+    <h3>ListCategory</h3>
+    <div class="tree-box box-border">
+
+        @foreach (Startup_models.Categories parent in category)
+        {
+
+            @if (parent.Parent_Id == 0)
+            {
+                <ul class="trees">
+                    <li class="has-child">
+                        <input id="tree-controll1" type="checkbox" checked><span class="tree-control"></span>
+                        <label>
+                            <input type="checkbox" />
+                            <i class="fa fa-desktop light-blue"></i> @parent.Category_Name <NavLink href="">Update / Add Child</NavLink> 
+                        </label>
+
+                        @{getChild(parent);}
+
+                    </li>
+                </ul>
+            }
+        }
+
+
+        @{
+
+            void getChild(Startup_models.Categories parent)
+            {
+
+                var children = category.Where(e => e.Parent_Id == parent.Id).OrderBy(e => e.Id);
+
+                if (children != null && children.Any())
+                {
+
+                    <ul>
+                        @foreach (Startup_models.Categories child in children)
+                        {
+
+                            <li class="has-child">
+                                <input type="checkbox" checked><span class="tree-control"></span>
+                                                               <label>
+                                                                   <input type="checkbox" />
+                                                                   <i class="fa fa-tasks orange"></i> @child.Category_Name  <NavLink href="@($"/Admin/Update/{child.Category_Name}/{child.Id}")">Update / Add Child</NavLink>
+                                                               </label>
+
+                                @{getChild(child);}
+                            </li>
+                        }
+                    </ul>
+                }
+            }
+
+
+        }
+
+    </div>
+
+</div>
+}
